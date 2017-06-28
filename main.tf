@@ -9,7 +9,7 @@ module "label" {
 
 resource "aws_efs_file_system" "default" {
   tags {
-    Name      = "${module.label.value}"
+    Name      = "${module.label.id}"
     Namespace = "${var.namespace}"
     Stage     = "${var.stage}"
   }
@@ -23,7 +23,7 @@ resource "aws_efs_mount_target" "default" {
 }
 
 resource "aws_security_group" "default" {
-  name        = "${module.label.value}"
+  name        = "${module.label.id}"
   description = "EFS"
   vpc_id      = "${var.vpc_id}"
 
@@ -46,7 +46,7 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name      = "${module.label.value}"
+    Name      = "${module.label.id}"
     Namespace = "${var.namespace}"
     Stage     = "${var.stage}"
   }
