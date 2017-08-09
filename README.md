@@ -1,6 +1,6 @@
 # tf_efs
 
-Terraform config to create aws EFS
+Terraform module to provision an AWS EFS Network File System.
 
 ## Usage
 
