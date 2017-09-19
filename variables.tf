@@ -7,7 +7,7 @@ variable "stage" {
 }
 
 variable "name" {
-  default = "efs"
+  default = "app"
 }
 
 variable "security_groups" {
@@ -27,3 +27,18 @@ variable "availability_zones" {
 }
 
 variable "zone_id" {}
+
+variable "delimiter" {
+  type    = "string"
+  default = "-"
+}
+
+variable "attributes" {
+  type    = "list"
+  default = []
+}
+
+variable "tags" {
+  type    = "map"
+  default = {}
+}
