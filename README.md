@@ -26,25 +26,25 @@ module "efs" {
 
 ## Input
 
-|  Name              |    Default     |                          Decription                              |
-|:------------------:|:--------------:|:----------------------------------------------------------------:|
-| namespace          | `global`       | Namespace                                                        |
-| stage              | `default`      | Stage                                                            |
-| name               | `app`          | Name                                                             |
+|  Name              |    Default     |                          Description                             |
+|:-------------------|:--------------:|:-----------------------------------------------------------------|
+| namespace          | `global`       | Namespace (_e.g._ `cp` or `cloudposse`)                          |
+| stage              | `default`      | Stage (_e.g._ `prod`, `dev`, `staging`)                          |
+| name               | `app`          | Name (_e.g._ `app` or `wordpress`)                               |
 | security_groups    | `[]`           | AWS security group ids to allow to connect to the EFS            |
 | aws_region         | __REQUIRED__   | AWS region id                                                    |
 | vpc_id             | __REQUIRED__   | AWS VPC id                                                       |
 | subnets            | `[]`           | AWS subnet ids                                                   |
 | availability_zones | `[]`           | Availability zone ids                                            |
 | zone_id            | __REQUIRED__   | Route53 dns zone id                                              |
-| `attributes`       | `[]`           | Additional attributes (e.g. `policy` or `role`)                  |
-| `tags`             | `{}`           | Additional tags  (e.g. `map("BusinessUnit","XYZ")`               |
-| `delimiter`        | `-`            | Delimiter to be used between `name`, `namespace`, `stage`, etc.  |
+| attributes         | `[]`           | Additional attributes (e.g. `policy` or `role`)                  |
+| tags               | `{}`           | Additional tags  (e.g. `map("BusinessUnit","XYZ")`               |
+| delimiter          | `-`            | Delimiter to be used between `name`, `namespace`, `stage`, etc.  |
 
 
 ## Output
 
-| Name |        Decription               |
-|:----:|:-------------------------------:|
+| Name |        Description              |
+|:-----|:--------------------------------|
 | id   | EFS id                          |
 | host | Assigned DNS-record for the EFS |
