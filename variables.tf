@@ -7,7 +7,7 @@ variable "stage" {
 }
 
 variable "name" {
-  default = "efs"
+  default = "app"
 }
 
 variable "security_groups" {

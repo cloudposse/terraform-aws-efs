@@ -8,10 +8,11 @@ Include this repository as a module in your existing terraform code:
 
 ```
 module "efs" {
-  source    = "git::https://github.com/cloudposse/tf_efs.git?ref=tags/0.1.0"
-  namespace       = "general"
-  name            = "nfs"
-  stage           = "prod"
+  source     = "git::https://github.com/cloudposse/tf_efs.git?ref=tags/0.2.0"
+  namespace  = "global"
+  name       = "app"
+  stage      = "prod"
+  attributes = "efs"
 
   aws_region         = "${var.aws_region}"
   vpc_id             = "${var.vpc_id}"
@@ -25,22 +26,25 @@ module "efs" {
 
 ## Input
 
-|  Name              |  Default     |  Decription            |
-|:------------------:|:------------:|:----------------------:|
-| namespace          | global       | Namespace              |
-| stage              | default      | Stage                  |
-| name               | redis        | Name                   |
-| security_groups    | []           | AWS security group ids |
-| aws_region         | __REQUIRED__ | AWS region id          |
-| vpc_id             | __REQUIRED__ | AWS VPC id             |
-| subnets            | []           | AWS subnet ids         |
-| availability_zones | []           | Availability zone ids  |
-| zone_id            | __REQUIRED__ | Route53 dns zone id    |
+|  Name              |    Default     |                          Decription                              |
+|:------------------:|:--------------:|:----------------------------------------------------------------:|
+| namespace          | `global`       | Namespace                                                        |
+| stage              | `default`      | Stage                                                            |
+| name               | `app`          | Name                                                             |
+| security_groups    | `[]`           | AWS security group ids to allow to connect to the EFS            |
+| aws_region         | __REQUIRED__   | AWS region id                                                    |
+| vpc_id             | __REQUIRED__   | AWS VPC id                                                       |
+| subnets            | `[]`           | AWS subnet ids                                                   |
+| availability_zones | `[]`           | Availability zone ids                                            |
+| zone_id            | __REQUIRED__   | Route53 dns zone id                                              |
+| `attributes`       | `[]`           | Additional attributes (e.g. `policy` or `role`)                  |
+| `tags`             | `{}`           | Additional tags  (e.g. `map("BusinessUnit","XYZ")`               |
+| `delimiter`        | `-`            | Delimiter to be used between `name`, `namespace`, `stage`, etc.  |
 
 
 ## Output
 
-| Name | Decription |
-|:----:|:----------:|
-| id   | EFS id     |
-| host | EFS host   |
+| Name |        Decription               |
+|:----:|:-------------------------------:|
+| id   | EFS id                          |
+| host | Assigned DNS-record for the EFS |
