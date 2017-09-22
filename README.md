@@ -1,14 +1,15 @@
-# tf_efs
+# terraform-aws-efs
 
-Terraform module to provision an AWS EFS Network File System.
+Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
+
 
 ## Usage
 
 Include this repository as a module in your existing terraform code:
 
-```
+```hcl
 module "efs" {
-  source     = "git::https://github.com/cloudposse/tf_efs.git?ref=tags/0.2.0"
+  source     = "git::https://github.com/cloudposse/terraform-aws-efs.git?ref=master"
   namespace  = "global"
   name       = "app"
   stage      = "prod"
