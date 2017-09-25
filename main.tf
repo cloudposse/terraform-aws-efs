@@ -10,11 +10,7 @@ module "label" {
 }
 
 resource "aws_efs_file_system" "default" {
-  tags {
-    Name      = "${module.label.id}"
-    Namespace = "${var.namespace}"
-    Stage     = "${var.stage}"
-  }
+  tags = "${module.label.tags}"
 }
 
 resource "aws_efs_mount_target" "default" {
