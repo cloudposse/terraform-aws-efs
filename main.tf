@@ -10,11 +10,7 @@ module "label" {
 }
 
 resource "aws_efs_file_system" "default" {
-  tags {
-    Name      = "${module.label.id}"
-    Namespace = "${var.namespace}"
-    Stage     = "${var.stage}"
-  }
+  tags = "${module.label.tags}"
 }
 
 resource "aws_efs_mount_target" "default" {
@@ -47,19 +43,13 @@ resource "aws_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
-    Name      = "${module.label.id}"
-    Namespace = "${var.namespace}"
-    Stage     = "${var.stage}"
-  }
+  tags = "${module.label.tags}"
 }
 
 module "dns" {
-  source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.1.1"
-  namespace = "${var.namespace}"
-  name      = "${var.name}"
-  stage     = "${var.stage}"
-  ttl       = 60
-  zone_id   = "${var.zone_id}"
-  records   = ["${aws_efs_file_system.default.id}.efs.${var.aws_region}.amazonaws.com"]
+  source  = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.1.1"
+  name    = "${module.label.id}"
+  ttl     = 60
+  zone_id = "${var.zone_id}"
+  records = ["${aws_efs_file_system.default.id}.efs.${var.aws_region}.amazonaws.com"]
 }
