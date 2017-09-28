@@ -32,12 +32,12 @@ module "efs" {
 | namespace          | `global`       | Namespace (_e.g._ `cp` or `cloudposse`)                          |
 | stage              | `default`      | Stage (_e.g._ `prod`, `dev`, `staging`)                          |
 | name               | `app`          | Name (_e.g._ `app` or `wordpress`)                               |
-| security_groups    | `[]`           | AWS security group ids to allow to connect to the EFS            |
-| aws_region         | __REQUIRED__   | AWS region id                                                    |
-| vpc_id             | __REQUIRED__   | AWS VPC id                                                       |
-| subnets            | `[]`           | AWS subnet ids                                                   |
-| availability_zones | `[]`           | Availability zone ids                                            |
-| zone_id            | __REQUIRED__   | Route53 dns zone id                                              |
+| security_groups    | `[]`           | AWS security group IDs to allow to connect to the EFS            |
+| aws_region         | __REQUIRED__   | AWS region ID                                                    |
+| vpc_id             | __REQUIRED__   | AWS VPC ID                                                       |
+| subnets            | __REQUIRED__   | AWS subnet IDs                                                   |
+| availability_zones | __REQUIRED__   | Availability Zone IDs                                            |
+| zone_id            | __REQUIRED__   | Route53 dns zone ID                                              |
 | attributes         | `[]`           | Additional attributes (e.g. `policy` or `role`)                  |
 | tags               | `{}`           | Additional tags  (e.g. `map("BusinessUnit","XYZ")`               |
 | delimiter          | `-`            | Delimiter to be used between `name`, `namespace`, `stage`, etc.  |
@@ -45,7 +45,8 @@ module "efs" {
 
 ## Output
 
-| Name |        Description              |
-|:-----|:--------------------------------|
-| id   | EFS id                          |
-| host | Assigned DNS-record for the EFS |
+| Name             |        Description                                               |
+|:-----------------|:-----------------------------------------------------------------|
+| id               | EFS id                                                           |
+| host             | Assigned DNS-record for the EFS                                  |
+| mount_target_ids | List of IDs of the EFS mount targets (one per Availability Zone) |
