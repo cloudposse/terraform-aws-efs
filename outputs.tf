@@ -13,3 +13,7 @@ output "dns_name" {
 output "mount_target_ids" {
   value = ["${aws_efs_mount_target.default.*.id}"]
 }
+
+output "mount_target_ips" {
+  value = ["${aws_efs_mount_target.default.*.ip_address}"]
+}
