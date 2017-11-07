@@ -50,3 +50,4 @@ module "efs" {
 | id               | EFS id                                                           |
 | host             | Assigned DNS-record for the EFS                                  |
 | mount_target_ids | List of IDs of the EFS mount targets (one per Availability Zone) |
+| mount_target_ips | List of IPs of the EFS mount targets (one per Availability Zone) |
