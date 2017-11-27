@@ -47,12 +47,12 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_security_group_rule" "ingress" {
-  count                    = "${var.enabled == "true" ? 1 : 0}"
+  count                    = "${var.enabled == "true" ? length(compact(var.security_groups)) : 0}"
   type                     = "ingress"
   from_port                = "2049"
   to_port                  = "2049"
   protocol                 = "tcp"
-  source_security_group_id = ["${var.security_groups}"]
+  source_security_group_id = "${element(compact(var.security_groups), count.index)}"
   security_group_id        = "${aws_security_group.default.id}"
 }
 

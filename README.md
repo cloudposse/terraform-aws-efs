@@ -52,3 +52,7 @@ module "efs" {
 | `mount_target_ids` | List of IDs of the EFS mount targets |
 | `mount_target_ips` | List of IPs of the EFS mount targets |
 | `dns_name`         | DNS name of EFS                      |
+
+## License
+
+Apache 2 License. See [`LICENSE`](LICENSE) for full details.
