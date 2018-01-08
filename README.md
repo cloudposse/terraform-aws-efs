@@ -1,4 +1,4 @@
-# terraform-aws-efs
+# terraform-aws-efs [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-efs.svg)](https://travis-ci.org/cloudposse/terraform-aws-efs)
 
 Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
 
