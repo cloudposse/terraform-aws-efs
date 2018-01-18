@@ -1,3 +1,7 @@
+locals {
+  efs_count = "${var.enabled == "true" ? 1 : 0}"
+}
+
 # Define composite variables for resources
 module "label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.1"
@@ -7,20 +11,23 @@ module "label" {
   delimiter  = "${var.delimiter}"
   attributes = "${var.attributes}"
   tags       = "${var.tags}"
+  enabled    = "${local.efs_count > 0 ? "true" : "false"}"
 }
 
 resource "aws_efs_file_system" "default" {
-  tags = "${module.label.tags}"
+  count = "${local.efs_count}"
+  tags  = "${module.label.tags}"
 }
 
 resource "aws_efs_mount_target" "default" {
-  count           = "${length(var.availability_zones)}"
+  count           = "${var.enabled == "true" ? length(var.availability_zones) : 0}"
   file_system_id  = "${aws_efs_file_system.default.id}"
   subnet_id       = "${element(var.subnets, count.index)}"
   security_groups = ["${aws_security_group.default.id}"]
 }
 
 resource "aws_security_group" "default" {
+  count       = "${local.efs_count}"
   name        = "${module.label.id}"
   description = "EFS"
   vpc_id      = "${var.vpc_id}"
@@ -52,4 +59,5 @@ module "dns" {
   ttl     = 60
   zone_id = "${var.zone_id}"
   records = ["${aws_efs_file_system.default.id}.efs.${var.aws_region}.amazonaws.com"]
+  enabled = "${local.efs_count > 0 ? "true" : "false"}"
 }
