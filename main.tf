@@ -1,5 +1,4 @@
 data "aws_region" "default" {
-  count   = "${var.enabled == "true" ? 1 : 0}"
   current = "true"
 }
 
