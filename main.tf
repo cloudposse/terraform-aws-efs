@@ -4,7 +4,7 @@ data "aws_region" "default" {
 
 locals {
   region  = "${length(var.region) > 0 ? var.region: data.aws_region.default.name}"
-  zone_id = "${length(var.zone_id) > 0 ? "true" : "false"}"
+  zone_id = "${length(var.zone_id) > 0 && var.enabled == "true" ? "true" : "false"}"
 }
 
 module "label" {
