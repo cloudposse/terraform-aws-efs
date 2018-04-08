@@ -13,7 +13,7 @@ module "efs" {
   namespace  = "global"
   name       = "app"
   stage      = "prod"
-  attributes = "efs"
+  attributes = ["efs"]
 
   aws_region         = "${var.aws_region}"
   vpc_id             = "${var.vpc_id}"
