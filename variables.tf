@@ -37,6 +37,7 @@ variable "availability_zones" {
 }
 
 variable "zone_id" {
+  default     = ""
   description = "Route53 dns zone ID"
 }
 
