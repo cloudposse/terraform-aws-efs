@@ -14,7 +14,7 @@
 | subnets | AWS subnet IDs | list | - | yes |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')`) | map | `<map>` | no |
 | vpc_id | AWS VPC ID | string | - | yes |
-| zone_id | Route53 dns zone ID | string | - | yes |
+| zone_id | Route53 dns zone ID | string | `` | no |
 
 ## Outputs
 
