@@ -52,4 +52,5 @@ module "dns" {
   ttl     = 60
   zone_id = "${var.zone_id}"
   records = ["${aws_efs_file_system.default.id}.efs.${var.aws_region}.amazonaws.com"]
+  enabled   = "${length(var.zone_id) > 0 ? "true" : "false"}"
 }
