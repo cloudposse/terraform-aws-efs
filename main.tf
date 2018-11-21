@@ -10,8 +10,8 @@ module "label" {
 }
 
 resource "aws_efs_file_system" "default" {
-  tags = "${module.label.tags}"
-  encrypted = "${var.encrypted}"
+  tags             = "${module.label.tags}"
+  encrypted        = "${var.encrypted}"
   performance_mode = "${var.performance_mode}"
 }
 
