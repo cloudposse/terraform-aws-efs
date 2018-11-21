@@ -11,6 +11,8 @@ module "label" {
 
 resource "aws_efs_file_system" "default" {
   tags = "${module.label.tags}"
+  encrypted = "${var.encrypted}"
+  performance_mode = "${var.performance_mode}"
 }
 
 resource "aws_efs_mount_target" "default" {
