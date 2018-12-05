@@ -11,6 +11,7 @@ name: terraform-aws-efs
 tags:
   - aws
   - terraform
+  - terraform-modules
   - networking
   - efs
   - nfs
