@@ -58,3 +58,15 @@ variable "tags" {
   default     = {}
   description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`)"
 }
+
+variable "encrypted" {
+  type        = "string"
+  default     = "false"
+  description = "If true, the disk will be encrypted."
+}
+
+variable "performance_mode" {
+  type        = "string"
+  default     = "generalPurpose"
+  description = "The file system performance mode. Can be either `generalPurpose` or `maxIO`"
+}

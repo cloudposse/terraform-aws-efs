@@ -86,8 +86,10 @@ Available targets:
 | availability_zones | Availability Zone IDs | list | - | yes |
 | aws_region | AWS region ID | string | - | yes |
 | delimiter | Delimiter to be used between `name`, `namespace`, `stage`, etc. | string | `-` | no |
+| encrypted | If true, the disk will be encrypted. | string | `false` | no |
 | name | Name (_e.g._ `app` or `wordpress`) | string | `app` | no |
 | namespace | Namespace (_e.g._ `cp` or `cloudposse`) | string | `global` | no |
+| performance_mode | The file system performance mode. Can be either `generalPurpose` or `maxIO` | string | `generalPurpose` | no |
 | security_groups | AWS security group IDs to allow to connect to the EFS | list | - | yes |
 | stage | Stage (_e.g._ `prod`, `dev`, `staging`) | string | `default` | no |
 | subnets | AWS subnet IDs | list | - | yes |
