@@ -1,6 +1,6 @@
 output "arn" {
   value       = "${aws_efs_file_system.default.arn}"
-  description = "EFS arn"
+  description = "EFS ARN"
 }
 
 output "id" {
