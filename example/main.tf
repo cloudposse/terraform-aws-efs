@@ -5,11 +5,19 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 module "efs" {
-  source = "../"
+  source     = "../"
+  namespace  = "${var.namespace}"
+  name       = "${var.name}"
+  stage      = "${var.stage}"
+  attributes = "${var.attributes}"
 
-  security_groups    = "${var.security_groups}"
-  vpc_id             = "${var.vpc_id}"
-  aws_region         = "${var.aws_region}"
+  aws_region         = "${var.region}"
+  availability_zones = ["${var.availability_zones}"]
+  security_groups    = ["${var.security_groups}"]
   subnets            = "${var.subnets}"
-  availability_zones = "${data.aws_availability_zones.available.names}"
+  zone_id            = "${var.zone_id}"
+  vpc_id             = "${var.vpc_id}"
+
+  throughput_mode                 = "${var.throughput_mode}"
+  provisioned_throughput_in_mibps = "${var.provisioned_throughput_in_mibps}"
 }
