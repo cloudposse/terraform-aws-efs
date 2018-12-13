@@ -5,7 +5,7 @@ output "arn" {
 
 output "id" {
   value       = "${aws_efs_file_system.default.id}"
-  description = "EFS id"
+  description = "EFS ID"
 }
 
 output "host" {
