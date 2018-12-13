@@ -103,11 +103,14 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
+| arn | EFS arn |
 | dns_name | DNS name |
 | host | Assigned DNS-record for the EFS |
 | id | EFS id |
+| mount_target_dns_names | The DNS names for the given subnet/AZ per documented convention. |
 | mount_target_ids | List of IDs of the EFS mount targets (one per Availability Zone) |
 | mount_target_ips | List of IPs of the EFS mount targets (one per Availability Zone) |
+| network_interface_ids | The ID of the network interface that Amazon EFS created when it created the mount target. |
 
 
 
