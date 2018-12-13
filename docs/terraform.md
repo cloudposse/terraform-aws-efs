@@ -24,10 +24,10 @@
 
 | Name | Description |
 |------|-------------|
-| arn | EFS arn |
+| arn | EFS ARN |
 | dns_name | DNS name |
 | host | Assigned DNS-record for the EFS |
-| id | EFS id |
+| id | EFS ID |
 | mount_target_dns_names | The DNS names for the given subnet/AZ per documented convention. |
 | mount_target_ids | List of IDs of the EFS mount targets (one per Availability Zone) |
 | mount_target_ips | List of IPs of the EFS mount targets (one per Availability Zone) |
