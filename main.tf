@@ -10,14 +10,17 @@ module "label" {
 }
 
 resource "aws_efs_file_system" "default" {
-  tags             = "${module.label.tags}"
-  encrypted        = "${var.encrypted}"
-  performance_mode = "${var.performance_mode}"
+  tags                            = "${module.label.tags}"
+  encrypted                       = "${var.encrypted}"
+  performance_mode                = "${var.performance_mode}"
+  provisioned_throughput_in_mibps = "${var.provisioned_throughput_in_mibps}"
+  throughput_mode                 = "${var.throughput_mode}"
 }
 
 resource "aws_efs_mount_target" "default" {
   count           = "${length(var.availability_zones)}"
   file_system_id  = "${aws_efs_file_system.default.id}"
+  ip_address      = "${var.mount_target_ip_address}"
   subnet_id       = "${element(var.subnets, count.index)}"
   security_groups = ["${aws_security_group.default.id}"]
 }

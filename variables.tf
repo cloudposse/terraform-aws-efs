@@ -70,3 +70,18 @@ variable "performance_mode" {
   default     = "generalPurpose"
   description = "The file system performance mode. Can be either `generalPurpose` or `maxIO`"
 }
+
+variable "provisioned_throughput_in_mibps" {
+  default     = ""
+  description = "The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with throughput_mode set to provisioned."
+}
+
+variable "throughput_mode" {
+  default     = "bursting"
+  description = "Throughput mode for the file system. Defaults to bursting. Valid values: bursting, provisioned. When using provisioned, also set provisioned_throughput_in_mibps."
+}
+
+variable "mount_target_ip_address" {
+  default     = ""
+  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target."
+}
