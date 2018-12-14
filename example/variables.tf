@@ -4,6 +4,7 @@ variable "region" {
 
 variable "attributes" {
   default = []
+  type = "list"
 }
 
 variable "namespace" {
@@ -18,10 +19,16 @@ variable "stage" {
   default = "testing"
 }
 
-variable "availability_zones" {}
+variable "availability_zones" {
+  type = "list"
+}
 variable "provisioned_throughput_in_mibps" {}
-variable "security_groups" {}
-variable "subnets" {}
+variable "security_groups" {
+  type = "list"
+}
+variable "subnets" {
+  type = "list"
+}
 variable "throughput_mode" {}
 variable "vpc_id" {}
 variable "zone_id" {}
