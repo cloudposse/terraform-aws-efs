@@ -19,8 +19,8 @@ output "dns_name" {
 }
 
 output "mount_target_dns_names" {
-  value       = "${aws_efs_mount_target.default.*.dns_name}"
-  description = "The DNS names for the given subnet/AZ per documented convention."
+  value       = ["${aws_efs_mount_target.default.*.dns_name}"]
+  description = "List of DNS names for the given subnet/AZ per documented convention."
 }
 
 output "mount_target_ids" {
