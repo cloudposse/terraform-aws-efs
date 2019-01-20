@@ -7,6 +7,7 @@
 | availability_zones | Availability Zone IDs | list | - | yes |
 | aws_region | AWS region ID | string | - | yes |
 | delimiter | Delimiter to be used between `name`, `namespace`, `stage`, etc. | string | `-` | no |
+| enabled | Set to false to prevent the module from creating any resources | string | `true` | no |
 | name | Name (_e.g._ `app` or `wordpress`) | string | `app` | no |
 | namespace | Namespace (_e.g._ `cp` or `cloudposse`) | string | `global` | no |
 | security_groups | AWS security group IDs to allow to connect to the EFS | list | - | yes |

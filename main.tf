@@ -7,20 +7,28 @@ module "label" {
   delimiter  = "${var.delimiter}"
   attributes = "${var.attributes}"
   tags       = "${var.tags}"
+  enabled    = "${var.enabled}"
+}
+
+locals {
+  enabled  = "${var.enabled == "true"}"
+  dns_name = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.aws_region}.amazonaws.com"
 }
 
 resource "aws_efs_file_system" "default" {
-  tags = "${module.label.tags}"
+  count = "${local.enabled ? 1 : 0}"
+  tags  = "${module.label.tags}"
 }
 
 resource "aws_efs_mount_target" "default" {
-  count           = "${length(var.availability_zones)}"
-  file_system_id  = "${aws_efs_file_system.default.id}"
+  count           = "${local.enabled && length(var.availability_zones) > 0 ? length(var.availability_zones) : 0}"
+  file_system_id  = "${join("", aws_efs_file_system.default.*.id)}"
   subnet_id       = "${element(var.subnets, count.index)}"
-  security_groups = ["${aws_security_group.default.id}"]
+  security_groups = ["${join("", aws_security_group.default.*.id)}"]
 }
 
 resource "aws_security_group" "default" {
+  count       = "${local.enabled ? 1 : 0}"
   name        = "${module.label.id}"
   description = "EFS"
   vpc_id      = "${var.vpc_id}"
@@ -51,5 +59,6 @@ module "dns" {
   name    = "${module.label.id}"
   ttl     = 60
   zone_id = "${var.zone_id}"
-  records = ["${aws_efs_file_system.default.id}.efs.${var.aws_region}.amazonaws.com"]
+  records = ["${local.dns_name}"]
+  enabled = "${var.enabled}"
 }

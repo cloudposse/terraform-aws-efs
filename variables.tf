@@ -57,3 +57,9 @@ variable "tags" {
   default     = {}
   description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`)"
 }
+
+variable "enabled" {
+  type        = "string"
+  default     = "true"
+  description = "Set to false to prevent the module from creating any resources"
+}
