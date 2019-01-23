@@ -35,5 +35,5 @@ output "mount_target_ips" {
 
 output "network_interface_ids" {
   value       = ["${local.enabled ? aws_efs_mount_target.default.*.network_interface_id : list("") }"]
-  description = "The IDs of the network interface that Amazon EFS created when it created the mount target."
+  description = "The IDs of the network interface that Amazon EFS created when it created the mount target"
 }
