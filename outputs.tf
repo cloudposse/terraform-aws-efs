@@ -20,7 +20,7 @@ output "dns_name" {
 
 output "mount_target_dns_names" {
   value       = ["${local.enabled ? aws_efs_mount_target.default.*.dns_name : list("") }"]
-  description = "List of DNS names for the given subnet/AZ per documented convention."
+  description = "List of DNS names for the given subnet/AZ per documented convention"
 }
 
 output "mount_target_ids" {
