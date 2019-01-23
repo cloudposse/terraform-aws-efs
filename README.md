@@ -77,6 +77,7 @@ Available targets:
   lint                                Lint terraform code
 
 ```
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -85,6 +86,7 @@ Available targets:
 | availability_zones | Availability Zone IDs | list | - | yes |
 | aws_region | AWS region ID | string | - | yes |
 | delimiter | Delimiter to be used between `name`, `namespace`, `stage`, etc. | string | `-` | no |
+| enabled | Set to false to prevent the module from creating any resources | string | `true` | no |
 | encrypted | If true, the disk will be encrypted. | string | `false` | no |
 | mount_target_ip_address | The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target. | string | `` | no |
 | name | Name (_e.g._ `app` or `wordpress`) | string | `app` | no |
