@@ -6,7 +6,7 @@ variable "enabled" {
 
 variable "namespace" {
   default     = "global"
-  description = "Namespace (_e.g._ `cp` or `cloudposse`)"
+  description = "Namespace (_e.g._ `eg` or `cp`)"
 }
 
 variable "stage" {
