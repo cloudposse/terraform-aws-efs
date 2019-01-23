@@ -24,7 +24,7 @@ output "mount_target_dns_names" {
 }
 
 output "mount_target_ids" {
-  value       = ["${local.enabled ? aws_efs_mount_target.default.*.id : "" }"]
+  value       = ["${local.enabled ? aws_efs_mount_target.default.*.id : list("") }"]
   description = "List of IDs of the EFS mount targets (one per Availability Zone)"
 }
 
