@@ -29,7 +29,7 @@ output "mount_target_ids" {
 }
 
 output "mount_target_ips" {
-  value       = ["${local.enabled ? aws_efs_mount_target.default.*.ip_address : "" }"]
+  value       = ["${local.enabled ? aws_efs_mount_target.default.*.ip_address : list("") }"]
   description = "List of IPs of the EFS mount targets (one per Availability Zone)"
 }
 
