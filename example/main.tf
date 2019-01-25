@@ -12,7 +12,7 @@ module "efs" {
   aws_region         = "${var.region}"
   availability_zones = ["${var.availability_zones}"]
   security_groups    = ["${var.security_groups}"]
-  subnets            = "${var.subnets}"
+  subnets            = ["${var.subnets}"]
   zone_id            = "${var.zone_id}"
   vpc_id             = "${var.vpc_id}"
 
