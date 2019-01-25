@@ -1,40 +1,45 @@
 variable "enabled" {
   type        = "string"
-  default     = "true"
   description = "Set to false to prevent the module from creating any resources"
+  default     = "true"
 }
 
 variable "namespace" {
-  default     = "global"
+  type        = "string"
   description = "Namespace (_e.g._ `eg` or `cp`)"
+  default     = "eg"
 }
 
 variable "stage" {
-  default     = "default"
+  type        = "string"
   description = "Stage (_e.g._ `prod`, `dev`, `staging`)"
+  default     = "default"
 }
 
 variable "name" {
+  type        = "string"
+  description = "Name (_e.g._ `app`)"
   default     = "app"
-  description = "Name (_e.g._ `app` or `wordpress`)"
 }
 
 variable "security_groups" {
   type        = "list"
-  description = "AWS security group IDs to allow to connect to the EFS"
+  description = "Security group IDs to allow access to the EFS"
 }
 
 variable "vpc_id" {
-  description = "AWS VPC ID"
+  type        = "string"
+  description = "VPC ID"
 }
 
 variable "aws_region" {
-  description = "AWS region ID"
+  type        = "string"
+  description = "AWS Region"
 }
 
 variable "subnets" {
   type        = "list"
-  description = "AWS subnet IDs"
+  description = "Subnet IDs"
 }
 
 variable "availability_zones" {
@@ -43,51 +48,54 @@ variable "availability_zones" {
 }
 
 variable "zone_id" {
+  type        = "string"
+  description = "Route53 DNS zone ID"
   default     = ""
-  description = "Route53 dns zone ID"
 }
 
 variable "delimiter" {
   type        = "string"
+  description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
   default     = "-"
-  description = "Delimiter to be used between `name`, `namespace`, `stage`, etc."
 }
 
 variable "attributes" {
   type        = "list"
+  description = "Additional attributes (e.g. `1`)"
   default     = []
-  description = "Additional attributes (e.g. `policy` or `role`)"
 }
 
 variable "tags" {
   type        = "map"
+  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
   default     = {}
-  description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`)"
 }
 
 variable "encrypted" {
   type        = "string"
+  description = "If true, the disk will be encrypted"
   default     = "false"
-  description = "If true, the disk will be encrypted."
 }
 
 variable "performance_mode" {
   type        = "string"
-  default     = "generalPurpose"
   description = "The file system performance mode. Can be either `generalPurpose` or `maxIO`"
+  default     = "generalPurpose"
 }
 
 variable "provisioned_throughput_in_mibps" {
   default     = 0
-  description = "The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with throughput_mode set to provisioned."
+  description = "The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with throughput_mode set to provisioned"
 }
 
 variable "throughput_mode" {
+  type        = "string"
+  description = "Throughput mode for the file system. Defaults to bursting. Valid values: bursting, provisioned. When using provisioned, also set provisioned_throughput_in_mibps"
   default     = "bursting"
-  description = "Throughput mode for the file system. Defaults to bursting. Valid values: bursting, provisioned. When using provisioned, also set provisioned_throughput_in_mibps."
 }
 
 variable "mount_target_ip_address" {
+  type        = "string"
+  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
   default     = ""
-  description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target."
 }
