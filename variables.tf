@@ -99,3 +99,9 @@ variable "mount_target_ip_address" {
   description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
   default     = ""
 }
+
+variable "dns_name" {
+  type        = "string"
+  description = "Name of the CNAME record to create."
+  default     = ""
+}
