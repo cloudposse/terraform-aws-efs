@@ -102,6 +102,6 @@ variable "mount_target_ip_address" {
 
 variable "dns_name" {
   type        = "string"
-  description = "Name of the CNAME record to create.
+  description = "Name of the CNAME record to create."
   default     = ""
 }
