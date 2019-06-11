@@ -11,7 +11,7 @@ module "label" {
 }
 
 locals {
-  enabled  = var.enabled == true
+  enabled  = var.enabled
   dns_name = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.aws_region}.amazonaws.com"
 }
 
