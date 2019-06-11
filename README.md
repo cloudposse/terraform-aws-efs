@@ -86,7 +86,7 @@ Available targets:
 | aws_region | AWS Region | string | - | yes |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | string | `-` | no |
 | dns_name | Name of the CNAME record to create. | string | `` | no |
-| enabled | Set to false to prevent the module from creating any resources | string | `true` | no |
+| enabled | Set to false to prevent the module from creating any resources | bool | true | no |
 | encrypted | If true, the disk will be encrypted | string | `false` | no |
 | mount_target_ip_address | The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target | string | `` | no |
 | name | Name (_e.g._ `app`) | string | `app` | no |
