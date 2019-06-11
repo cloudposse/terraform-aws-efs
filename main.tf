@@ -11,7 +11,7 @@ module "label" {
 }
 
 locals {
-  enabled  = var.enabled == "true"
+  enabled  = var.enabled == true
   dns_name = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.aws_region}.amazonaws.com"
 }
 
@@ -61,7 +61,7 @@ resource "aws_security_group" "default" {
 
 module "dns" {
   source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.2.5"
-  enabled   = local.enabled && length(var.zone_id) > 0 ? "true" : "false"
+  enabled   = local.enabled && length(var.zone_id) > 0 ? true : false
   name      = var.dns_name == "" ? module.label.id : var.dns_name
   namespace = var.namespace
   stage     = var.stage
