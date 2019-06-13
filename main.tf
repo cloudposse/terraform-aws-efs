@@ -1,6 +1,6 @@
 # Define composite variables for resources
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.5"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.12.0"
   enabled    = var.enabled
   namespace  = var.namespace
   name       = var.name
