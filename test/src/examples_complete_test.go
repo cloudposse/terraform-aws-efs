@@ -47,9 +47,8 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Equal(t, expectedPublicSubnetCidrs, publicSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
-	efsId := terraform.Output(t, terraformOptions, "efs_id")
+	efsArn := terraform.Output(t, terraformOptions, "efs_arn")
 
-	expectedEfsId := "eg-test-efs-test"
-	// Verify we're getting back the outputs we expect
-	assert.Equal(t, expectedEfsId, efsId)
+	// Verify we're getting back the outputs we expect, e.g. arn:aws:elasticfilesystem:us-west-1:126450723953:file-system/fs-0ce26015
+	assert.Contains(t, efsArn, "arn:aws:elasticfilesystem:us-west-1:126450723953:file-system/")
 }
