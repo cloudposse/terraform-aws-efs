@@ -58,12 +58,10 @@ resource "aws_security_group" "default" {
 }
 
 module "dns" {
-  source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.3.0"
-  enabled   = var.enabled && length(var.zone_id) > 0 ? true : false
-  name      = var.dns_name == "" ? module.label.id : var.dns_name
-  namespace = var.namespace
-  stage     = var.stage
-  ttl       = 60
-  zone_id   = var.zone_id
-  records   = [local.dns_name]
+  source  = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.3.0"
+  enabled = var.enabled && length(var.zone_id) > 0 ? true : false
+  name    = var.dns_name == "" ? module.label.id : var.dns_name
+  ttl     = 60
+  zone_id = var.zone_id
+  records = [local.dns_name]
 }
