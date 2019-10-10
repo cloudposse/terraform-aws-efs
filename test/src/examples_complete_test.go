@@ -27,28 +27,24 @@ func TestExamplesComplete(t *testing.T) {
 
 	// Run `terraform output` to get the value of an output variable
 	vpcCidr := terraform.Output(t, terraformOptions, "vpc_cidr")
-
 	expectedVpcCidr := "172.16.0.0/16"
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedVpcCidr, vpcCidr)
 
 	// Run `terraform output` to get the value of an output variable
 	privateSubnetCidrs := terraform.OutputList(t, terraformOptions, "private_subnet_cidrs")
-
 	expectedPrivateSubnetCidrs := []string{"172.16.0.0/18", "172.16.64.0/18"}
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedPrivateSubnetCidrs, privateSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
 	publicSubnetCidrs := terraform.OutputList(t, terraformOptions, "public_subnet_cidrs")
-
 	expectedPublicSubnetCidrs := []string{"172.16.128.0/18", "172.16.192.0/18"}
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedPublicSubnetCidrs, publicSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
 	efsArn := terraform.Output(t, terraformOptions, "efs_arn")
-
 	// Verify we're getting back the outputs we expect, e.g. arn:aws:elasticfilesystem:us-west-1:126450723953:file-system/fs-0ce26015
 	assert.Contains(t, efsArn, "arn:aws:elasticfilesystem:us-west-1:126450723953:file-system/")
 }

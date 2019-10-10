@@ -24,13 +24,12 @@ module "subnets" {
 }
 
 module "efs" {
-  source             = "../../"
-  namespace          = var.namespace
-  stage              = var.stage
-  name               = var.name
-  region             = var.region
-  availability_zones = var.availability_zones
-  vpc_id             = module.vpc.vpc_id
-  subnets            = module.subnets.private_subnet_ids
-  security_groups    = [module.vpc.vpc_default_security_group_id]
+  source          = "../../"
+  namespace       = var.namespace
+  stage           = var.stage
+  name            = var.name
+  region          = var.region
+  vpc_id          = module.vpc.vpc_id
+  subnets         = module.subnets.private_subnet_ids
+  security_groups = [module.vpc.vpc_default_security_group_id]
 }
