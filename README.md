@@ -85,7 +85,6 @@ Available targets:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
-| availability_zones | Availability Zone IDs | list(string) | - | yes |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | string | `-` | no |
 | dns_name | Name of the CNAME record to create | string | `` | no |
 | enabled | Set to false to prevent the module from creating any resources | bool | `true` | no |
@@ -116,6 +115,9 @@ Available targets:
 | mount_target_ids | List of EFS mount target IDs (one per Availability Zone) |
 | mount_target_ips | List of EFS mount target IPs (one per Availability Zone) |
 | network_interface_ids | List of mount target network interface IDs |
+| security_group_arn | EFS Security Group ARN |
+| security_group_id | EFS Security Group ID |
+| security_group_name | EFS Security Group name |
 
 
 
