@@ -41,11 +41,6 @@ variable "subnets" {
   description = "Subnet IDs"
 }
 
-variable "availability_zones" {
-  type        = list(string)
-  description = "Availability Zone IDs"
-}
-
 variable "zone_id" {
   type        = string
   description = "Route53 DNS zone ID"

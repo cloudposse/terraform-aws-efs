@@ -49,3 +49,18 @@ output "efs_network_interface_ids" {
   value       = module.efs.network_interface_ids
   description = "List of mount target network interface IDs"
 }
+
+output "security_group_id" {
+  value       = module.efs.security_group_id
+  description = "EFS Security Group ID"
+}
+
+output "security_group_arn" {
+  value       = module.efs.security_group_arn
+  description = "EFS Security Group ARN"
+}
+
+output "security_group_name" {
+  value       = module.efs.security_group_name
+  description = "EFS Security Group name"
+}

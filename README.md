@@ -85,7 +85,6 @@ Available targets:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
-| availability_zones | Availability Zone IDs | list(string) | - | yes |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name` and `attributes` | string | `-` | no |
 | dns_name | Name of the CNAME record to create | string | `` | no |
 | enabled | Set to false to prevent the module from creating any resources | bool | `true` | no |
@@ -116,6 +115,9 @@ Available targets:
 | mount_target_ids | List of EFS mount target IDs (one per Availability Zone) |
 | mount_target_ips | List of EFS mount target IPs (one per Availability Zone) |
 | network_interface_ids | List of mount target network interface IDs |
+| security_group_arn | EFS Security Group ARN |
+| security_group_id | EFS Security Group ID |
+| security_group_name | EFS Security Group name |
 
 
 
@@ -257,17 +259,17 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 |---|---|---|---|---|---|
 
   [osterman_homepage]: https://github.com/osterman
-  [osterman_avatar]: https://github.com/osterman.png?size=150
+  [osterman_avatar]: https://img.cloudposse.com/150x150/https://github.com/osterman.png
   [goruha_homepage]: https://github.com/goruha
-  [goruha_avatar]: https://github.com/goruha.png?size=150
+  [goruha_avatar]: https://img.cloudposse.com/150x150/https://github.com/goruha.png
   [aknysh_homepage]: https://github.com/aknysh
-  [aknysh_avatar]: https://github.com/aknysh.png?size=150
+  [aknysh_avatar]: https://img.cloudposse.com/150x150/https://github.com/aknysh.png
   [s2504s_homepage]: https://github.com/s2504s
-  [s2504s_avatar]: https://github.com/s2504s.png?size=150
+  [s2504s_avatar]: https://img.cloudposse.com/150x150/https://github.com/s2504s.png
   [maokomioko_homepage]: https://github.com/maokomioko
-  [maokomioko_avatar]: https://github.com/maokomioko.png?size=150
+  [maokomioko_avatar]: https://img.cloudposse.com/150x150/https://github.com/maokomioko.png
   [joshmyers_homepage]: https://github.com/joshmyers
-  [joshmyers_avatar]: https://github.com/joshmyers.png?size=150
+  [joshmyers_avatar]: https://img.cloudposse.com/150x150/https://github.com/joshmyers.png
 
 
 

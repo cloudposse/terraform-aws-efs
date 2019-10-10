@@ -1,5 +1,5 @@
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.14.1"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
   enabled    = var.enabled
   namespace  = var.namespace
   name       = var.name
@@ -23,7 +23,7 @@ resource "aws_efs_file_system" "default" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  count           = var.enabled && length(var.availability_zones) > 0 ? length(var.availability_zones) : 0
+  count           = var.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
   file_system_id  = join("", aws_efs_file_system.default.*.id)
   ip_address      = var.mount_target_ip_address
   subnet_id       = var.subnets[count.index]
@@ -33,7 +33,7 @@ resource "aws_efs_mount_target" "default" {
 resource "aws_security_group" "default" {
   count       = var.enabled ? 1 : 0
   name        = module.label.id
-  description = "EFS"
+  description = "EFS Security Group"
   vpc_id      = var.vpc_id
 
   lifecycle {
