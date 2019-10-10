@@ -257,17 +257,17 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 |---|---|---|---|---|---|
 
   [osterman_homepage]: https://github.com/osterman
-  [osterman_avatar]: https://github.com/osterman.png?size=150
+  [osterman_avatar]: https://img.cloudposse.com/150x150/https://github.com/osterman.png
   [goruha_homepage]: https://github.com/goruha
-  [goruha_avatar]: https://github.com/goruha.png?size=150
+  [goruha_avatar]: https://img.cloudposse.com/150x150/https://github.com/goruha.png
   [aknysh_homepage]: https://github.com/aknysh
-  [aknysh_avatar]: https://github.com/aknysh.png?size=150
+  [aknysh_avatar]: https://img.cloudposse.com/150x150/https://github.com/aknysh.png
   [s2504s_homepage]: https://github.com/s2504s
-  [s2504s_avatar]: https://github.com/s2504s.png?size=150
+  [s2504s_avatar]: https://img.cloudposse.com/150x150/https://github.com/s2504s.png
   [maokomioko_homepage]: https://github.com/maokomioko
-  [maokomioko_avatar]: https://github.com/maokomioko.png?size=150
+  [maokomioko_avatar]: https://img.cloudposse.com/150x150/https://github.com/maokomioko.png
   [joshmyers_homepage]: https://github.com/joshmyers
-  [joshmyers_avatar]: https://github.com/joshmyers.png?size=150
+  [joshmyers_avatar]: https://img.cloudposse.com/150x150/https://github.com/joshmyers.png
 
 
 
