@@ -40,21 +40,27 @@ resource "aws_security_group" "default" {
     create_before_destroy = true
   }
 
-  ingress {
-    from_port       = "2049" # NFS
-    to_port         = "2049"
-    protocol        = "tcp"
-    security_groups = var.security_groups
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = module.label.tags
+}
+
+resource "aws_security_group_rule" "inbound" {
+  count                    = var.enabled ? length(var.security_groups) : 0
+  type                     = "ingress"
+  from_port                = "2049" # NFS
+  to_port                  = "2049"
+  protocol                 = "tcp"
+  source_security_group_id = var.security_groups[count.index]
+  security_group_id        = aws_security_group.default[0].id
+}
+
+resource "aws_security_group_rule" "outbound" {
+  count             = var.enabled ? 1 : 0
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.default[0].id
 }
 
 module "dns" {
