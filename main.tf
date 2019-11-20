@@ -43,24 +43,24 @@ resource "aws_security_group" "efs" {
   tags = module.label.tags
 }
 
-resource "aws_security_group_rule" "inbound" {
+resource "aws_security_group_rule" "ingress" {
   count                    = var.enabled ? length(var.security_groups) : 0
   type                     = "ingress"
   from_port                = "2049" # NFS
   to_port                  = "2049"
   protocol                 = "tcp"
   source_security_group_id = var.security_groups[count.index]
-  security_group_id        = aws_security_group.efs[0].id
+  security_group_id        = join("", aws_security_group.efs.*.id)
 }
 
-resource "aws_security_group_rule" "outbound" {
+resource "aws_security_group_rule" "egress" {
   count             = var.enabled ? 1 : 0
   type              = "egress"
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.efs[0].id
+  security_group_id = join("", aws_security_group.efs.*.id)
 }
 
 module "dns" {
