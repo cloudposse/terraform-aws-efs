@@ -78,6 +78,12 @@ variable "encrypted" {
   default     = false
 }
 
+variable "kms_key_id" {
+  type        = string
+  description = "The ARN for the KMS encryption key to use"
+  default     = null
+}
+
 variable "performance_mode" {
   type        = string
   description = "The file system performance mode. Can be either `generalPurpose` or `maxIO`"
