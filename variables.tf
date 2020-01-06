@@ -1,24 +1,49 @@
-variable "enabled" {
-  type        = bool
-  description = "Set to false to prevent the module from creating any resources"
-  default     = true
-}
-
 variable "namespace" {
   type        = string
-  description = "Namespace (_e.g._ `eg` or `cp`)"
   default     = ""
+  description = "Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp'"
+}
+
+variable "environment" {
+  type        = string
+  default     = ""
+  description = "Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT'"
 }
 
 variable "stage" {
   type        = string
-  description = "Stage (_e.g._ `prod`, `dev`, `staging`)"
   default     = ""
+  description = "Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release'"
 }
 
 variable "name" {
   type        = string
-  description = "Name (_e.g._ `app`)"
+  default     = ""
+  description = "Solution name, e.g. 'app' or 'jenkins'"
+}
+
+variable "enabled" {
+  type        = bool
+  default     = true
+  description = "Set to false to prevent the module from creating any resources"
+}
+
+variable "delimiter" {
+  type        = string
+  default     = "-"
+  description = "Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`"
+}
+
+variable "attributes" {
+  type        = list(string)
+  default     = []
+  description = "Additional attributes (e.g. `1`)"
+}
+
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`"
 }
 
 variable "security_groups" {
@@ -45,24 +70,6 @@ variable "zone_id" {
   type        = string
   description = "Route53 DNS zone ID"
   default     = ""
-}
-
-variable "delimiter" {
-  type        = string
-  description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
-  default     = "-"
-}
-
-variable "attributes" {
-  type        = list(string)
-  description = "Additional attributes (e.g. `1`)"
-  default     = []
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "Additional tags (e.g. `{ BusinessUnit = \"XYZ\" }`"
-  default     = {}
 }
 
 variable "encrypted" {
