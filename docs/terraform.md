@@ -7,8 +7,8 @@
 | dns_name | Name of the CNAME record to create | string | `` | no |
 | enabled | Set to false to prevent the module from creating any resources | bool | `true` | no |
 | encrypted | If true, the file system will be encrypted | bool | `false` | no |
-| kms_key_id | If set, use the specified KMS key id to encrypt the filesystem | string | `null` | no |
 | environment | Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT' | string | `` | no |
+| kms_key_id | If set, use a specific KMS key | string | `null` | no |
 | mount_target_ip_address | The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target | string | `` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | string | `` | no |
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | string | `` | no |
