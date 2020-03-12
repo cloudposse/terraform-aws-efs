@@ -20,6 +20,7 @@
 | subnets | Subnet IDs | list(string) | - | yes |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | map(string) | `<map>` | no |
 | throughput_mode | Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps` | string | `bursting` | no |
+| transition_to_ia | Enable lifecycle policy and indicates how long it takes to transition files to the IA storage class. Valid values: `AFTER_7_DAYS`, `AFTER_14_DAYS`, `AFTER_30_DAYS`, `AFTER_60_DAYS`, or `AFTER_90_DAYS`. | string | `` | no
 | vpc_id | VPC ID | string | - | yes |
 | zone_id | Route53 DNS zone ID | string | `` | no |
 
