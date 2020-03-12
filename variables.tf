@@ -112,3 +112,9 @@ variable "dns_name" {
   description = "Name of the CNAME record to create"
   default     = ""
 }
+
+variable "transition_to_ia" {
+  type        = string
+  description = "Indicates how long it takes to transition files to the IA storage class."
+  default     = ""
+}
