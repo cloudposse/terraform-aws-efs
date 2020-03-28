@@ -22,6 +22,13 @@ resource "aws_efs_file_system" "default" {
   performance_mode                = var.performance_mode
   provisioned_throughput_in_mibps = var.provisioned_throughput_in_mibps
   throughput_mode                 = var.throughput_mode
+
+  dynamic "lifecycle_policy" {
+    for_each = var.transition_to_ia == "" ? [] : [1]
+    content {
+      transition_to_ia = var.transition_to_ia
+    }
+  }
 }
 
 resource "aws_efs_mount_target" "default" {
