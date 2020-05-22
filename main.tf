@@ -53,7 +53,7 @@ resource "aws_security_group" "efs" {
 }
 
 resource "aws_security_group_rule" "efs_cidr" {
-  count = var.enabled && var.use_security_group_cidr_blocks ? 1 : 0
+  count             = var.enabled && var.use_security_group_cidr_blocks ? 1 : 0
   type              = "ingress"
   from_port         = "2049" # NFS
   to_port           = "2049"
