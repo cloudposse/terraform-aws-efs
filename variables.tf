@@ -51,6 +51,18 @@ variable "security_groups" {
   description = "Security group IDs to allow access to the EFS"
 }
 
+variable "use_security_group_cidr_blocks" {
+  type        = bool
+  description = "A flag to enable/disable adding a security group rule for ingress access to the EFS from CIDR blocks"
+  default     = false
+}
+
+variable "security_group_cidr_blocks" {
+  type        = list(string)
+  description = "A list of CIDR blocks to add to the ingress rule to allow access to the EFS"
+  default     = []
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID"
