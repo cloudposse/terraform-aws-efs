@@ -52,7 +52,6 @@ resource "aws_security_group" "efs" {
   tags = module.label.tags
 }
 
-
 resource "aws_security_group_rule" "ingress" {
   count                    = var.enabled ? length(var.security_groups) : 0
   type                     = "ingress"
