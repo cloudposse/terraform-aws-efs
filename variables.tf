@@ -104,7 +104,7 @@ variable "throughput_mode" {
 variable "mount_target_ip_address" {
   type        = string
   description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
-  default     = ""
+  default     = null
 }
 
 variable "dns_name" {
