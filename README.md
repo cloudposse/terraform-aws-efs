@@ -42,7 +42,7 @@
 
 [![Cloud Posse][logo]](https://cpco.io/homepage)
 
-# terraform-aws-efs [![Codefresh Build Status](https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-efs?type=cf-1)](https://g.codefresh.io/public/accounts/cloudposse/pipelines/5d14d1b47e4d09d76edd0c7e) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-efs.svg)](https://github.com/cloudposse/terraform-aws-efs/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# terraform-aws-efs [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-efs.svg)](https://github.com/cloudposse/terraform-aws-efs/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
 Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
@@ -118,47 +118,62 @@ Available targets:
   lint                                Lint terraform code
 
 ```
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.12.0 |
+| aws | ~> 2.0 |
+| local | ~> 1.2 |
+| null | ~> 2.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | ~> 2.0 |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
-| delimiter | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes` | string | `-` | no |
-| dns_name | Name of the CNAME record to create | string | `` | no |
-| enabled | Set to false to prevent the module from creating any resources | bool | `true` | no |
-| encrypted | If true, the file system will be encrypted | bool | `false` | no |
-| environment | Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT' | string | `` | no |
-| kms_key_id | If set, use a specific KMS key | string | `null` | no |
-| mount_target_ip_address | The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target | string | `` | no |
-| name | Solution name, e.g. 'app' or 'jenkins' | string | `` | no |
-| namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | string | `` | no |
-| performance_mode | The file system performance mode. Can be either `generalPurpose` or `maxIO` | string | `generalPurpose` | no |
-| provisioned_throughput_in_mibps | The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned | string | `0` | no |
-| region | AWS Region | string | - | yes |
-| security_groups | Security group IDs to allow access to the EFS | list(string) | - | yes |
-| stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | string | `` | no |
-| subnets | Subnet IDs | list(string) | - | yes |
-| tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | map(string) | `<map>` | no |
-| throughput_mode | Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps` | string | `bursting` | no |
-| transition_to_ia | Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS | string | `` | no |
-| vpc_id | VPC ID | string | - | yes |
-| zone_id | Route53 DNS zone ID | string | `` | no |
+|------|-------------|------|---------|:--------:|
+| attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
+| delimiter | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes` | `string` | `"-"` | no |
+| dns\_name | Name of the CNAME record to create | `string` | `""` | no |
+| enabled | Set to false to prevent the module from creating any resources | `bool` | `true` | no |
+| encrypted | If true, the file system will be encrypted | `bool` | `false` | no |
+| environment | Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT' | `string` | `""` | no |
+| kms\_key\_id | If set, use a specific KMS key | `string` | `null` | no |
+| mount\_target\_ip\_address | The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target | `string` | `""` | no |
+| name | Solution name, e.g. 'app' or 'jenkins' | `string` | `""` | no |
+| namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `""` | no |
+| performance\_mode | The file system performance mode. Can be either `generalPurpose` or `maxIO` | `string` | `"generalPurpose"` | no |
+| provisioned\_throughput\_in\_mibps | The throughput, measured in MiB/s, that you want to provision for the file system. Only applicable with `throughput_mode` set to provisioned | `number` | `0` | no |
+| region | AWS Region | `string` | n/a | yes |
+| security\_groups | Security group IDs to allow access to the EFS | `list(string)` | n/a | yes |
+| stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `""` | no |
+| subnets | Subnet IDs | `list(string)` | n/a | yes |
+| tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
+| throughput\_mode | Throughput mode for the file system. Defaults to bursting. Valid values: `bursting`, `provisioned`. When using `provisioned`, also set `provisioned_throughput_in_mibps` | `string` | `"bursting"` | no |
+| transition\_to\_ia | Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER\_7\_DAYS, AFTER\_14\_DAYS, AFTER\_30\_DAYS, AFTER\_60\_DAYS and AFTER\_90\_DAYS | `string` | `""` | no |
+| vpc\_id | VPC ID | `string` | n/a | yes |
+| zone\_id | Route53 DNS zone ID | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | arn | EFS ARN |
-| dns_name | EFS DNS name |
+| dns\_name | EFS DNS name |
 | host | Route53 DNS hostname for the EFS |
 | id | EFS ID |
-| mount_target_dns_names | List of EFS mount target DNS names |
-| mount_target_ids | List of EFS mount target IDs (one per Availability Zone) |
-| mount_target_ips | List of EFS mount target IPs (one per Availability Zone) |
-| network_interface_ids | List of mount target network interface IDs |
-| security_group_arn | EFS Security Group ARN |
-| security_group_id | EFS Security Group ID |
-| security_group_name | EFS Security Group name |
+| mount\_target\_dns\_names | List of EFS mount target DNS names |
+| mount\_target\_ids | List of EFS mount target IDs (one per Availability Zone) |
+| mount\_target\_ips | List of EFS mount target IPs (one per Availability Zone) |
+| network\_interface\_ids | List of mount target network interface IDs |
+| security\_group\_arn | EFS Security Group ARN |
+| security\_group\_id | EFS Security Group ID |
+| security\_group\_name | EFS Security Group name |
 
 
 
@@ -212,6 +227,10 @@ We deliver 10x the value for a fraction of the cost of a full-time engineer. Our
 ## Slack Community
 
 Join our [Open Source Community][slack] on Slack. It's **FREE** for everyone! Our "SweetOps" community is where you get to talk with others who share a similar vision for how to rollout and manage infrastructure. This is the best place to talk shop, ask questions, solicit feedback, and work together as a community to build totally *sweet* infrastructure.
+
+## Discourse Forums
+
+Participate in our [Discourse Forums][discourse]. Here you'll find answers to commonly asked questions. Most questions will be related to the enormous number of projects we support on our GitHub. Come here to collaborate on answers, find solutions, and get ideas about the products and services we value. It only takes a minute to get started! Just sign in with SSO using your GitHub account.
 
 ## Newsletter
 
@@ -332,6 +351,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=testimonial
   [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=office_hours
   [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=newsletter
+  [discourse]: https://ask.sweetops.com/?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=discourse
   [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=email
   [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=commercial_support
   [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content=we_love_open_source
