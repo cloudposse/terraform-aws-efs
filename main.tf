@@ -62,6 +62,17 @@ resource "aws_security_group_rule" "ingress" {
   security_group_id        = join("", aws_security_group.efs.*.id)
 }
 
+resource "aws_security_group_rule" "ingress_cidr_blocks" {
+  count                    = var.enabled ? length(var.allowed_cidr_blocks) : 0
+  description              = "Allow inbound traffic from CIDR blocks"
+  type                     = "ingress"
+  from_port                = "2049" # NFS
+  to_port                  = "2049"
+  protocol                 = "tcp"
+  cidr_blocks              = var.allowed_cidr_blocks
+  security_group_id        = join("", aws_security_group.efs.*.id)
+}
+
 resource "aws_security_group_rule" "egress" {
   count             = var.enabled ? 1 : 0
   type              = "egress"
