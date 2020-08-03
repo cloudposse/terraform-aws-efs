@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "ingress" {
 }
 
 resource "aws_security_group_rule" "ingress_cidr_blocks" {
-  count             = var.enabled ? length(var.allowed_cidr_blocks) : 0
+  count             = var.enabled && length(var.allowed_cidr_blocks) > 0 ? 1 : 0
   description       = "Allow inbound traffic from CIDR blocks"
   type              = "ingress"
   from_port         = "2049" # NFS
