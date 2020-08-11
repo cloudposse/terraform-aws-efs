@@ -122,5 +122,5 @@ variable "transition_to_ia" {
 variable "allowed_cidr_blocks" {
   type        = list(string)
   default     = []
-  description = "The CIDRs which to allow `ingress` traffic to the DB instance"
+  description = "The CIDRs which to allow `ingress` traffic to the EFS"
 }
