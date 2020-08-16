@@ -1,5 +1,5 @@
 module "label" {
-  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.16.0"
+  source      = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.18.0"
   enabled     = var.enabled
   namespace   = var.namespace
   name        = var.name
@@ -73,7 +73,7 @@ resource "aws_security_group_rule" "egress" {
 }
 
 module "dns" {
-  source  = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.3.0"
+  source  = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.5.0"
   enabled = var.enabled && length(var.zone_id) > 0 ? true : false
   name    = var.dns_name == "" ? module.label.id : var.dns_name
   ttl     = 60
