@@ -65,7 +65,7 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Contains(t, efsId, "fs-")
 
 	// Run `terraform output` to get the value of an output variable
-	securityGroupName := terraform.OutputMap(t, terraformOptions, "security_group_name")
+	securityGroupName := terraform.Output(t, terraformOptions, "security_group_name")
 	expectedSecurityGroupName := "eg-test-efs-test-" + randId + "-efs"
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedSecurityGroupName, securityGroupName)
