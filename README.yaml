@@ -59,10 +59,12 @@ usage: |-
     zone_id            = var.aws_route53_dns_zone_id
   }
   ```
+
 include:
   - "docs/targets.md"
   - "docs/terraform.md"
 # Contributors to this project
+
 contributors:
   - name: "Erik Osterman"
     github: "osterman"
