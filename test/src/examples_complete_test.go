@@ -44,18 +44,29 @@ func TestExamplesComplete(t *testing.T) {
 
 	// Run `terraform output` to get the value of an output variable
 	privateSubnetCidrs := terraform.OutputList(t, terraformOptions, "private_subnet_cidrs")
-	expectedPrivateSubnetCidrs := []string{"172.16.0.0/18", "172.16.64.0/18"}
+	expectedPrivateSubnetCidrs := []string{"172.16.0.0/19", "172.16.32.0/19"}
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedPrivateSubnetCidrs, privateSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
 	publicSubnetCidrs := terraform.OutputList(t, terraformOptions, "public_subnet_cidrs")
-	expectedPublicSubnetCidrs := []string{"172.16.128.0/18", "172.16.192.0/18"}
+	expectedPublicSubnetCidrs := []string{"172.16.96.0/19", "172.16.128.0/19"}
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedPublicSubnetCidrs, publicSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
 	efsArn := terraform.Output(t, terraformOptions, "efs_arn")
 	// Verify we're getting back the outputs we expect
-	assert.Contains(t, efsArn, "arn:aws:elasticfilesystem:")
+	assert.Contains(t, efsArn, "arn:aws:elasticfilesystem:us-east-2:")
+
+	// Run `terraform output` to get the value of an output variable
+	efsId := terraform.Output(t, terraformOptions, "efs_id")
+	// Verify we're getting back the outputs we expect
+	assert.Contains(t, efsId, "fs-")
+
+	// Run `terraform output` to get the value of an output variable
+	securityGroupName := terraform.OutputMap(t, terraformOptions, "security_group_name")
+	expectedSecurityGroupName := "eg-test-efs-test-" + randId + "-efs"
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, expectedSecurityGroupName, securityGroupName)
 }
