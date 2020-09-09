@@ -75,11 +75,11 @@ resource "aws_security_group_rule" "egress" {
 module "dns" {
   source = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.7.0"
 
-  enabled = module.this.enabled && length(var.zone_id) > 0 ? true : false
-  name    = var.dns_name == "" ? module.this.id : var.dns_name
-  ttl     = 60
-  zone_id = var.zone_id
-  records = [local.dns_name]
+  enabled  = module.this.enabled && length(var.zone_id) > 0 ? true : false
+  dns_name = var.dns_name == "" ? module.this.id : var.dns_name
+  ttl      = 60
+  zone_id  = var.zone_id
+  records  = [local.dns_name]
 
   context = module.this.context
 }
