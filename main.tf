@@ -30,7 +30,7 @@ resource "aws_efs_mount_target" "default" {
 resource "aws_efs_access_point" "default" {
   for_each        = var.access_points
 
-  file_system_id  = aws_efs_file_system.defult.id
+  file_system_id  = aws_efs_file_system.default.id
   posix_user      = each.value["posix_user"]
   root_directory  = each.key
   tags            = module.this.tags
