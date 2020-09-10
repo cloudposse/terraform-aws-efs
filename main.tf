@@ -27,6 +27,15 @@ resource "aws_efs_mount_target" "default" {
   security_groups = [join("", aws_security_group.efs.*.id)]
 }
 
+resource "aws_efs_access_point" "default" {
+  for_each        = var.access_points
+
+  file_system_id  = aws_efs_file_system.defult.id
+  posix_user      = each.value["posix_user"]
+  root_directory  = each.key
+  tags            = module.this.tags
+}
+
 resource "aws_security_group" "efs" {
   count       = module.this.enabled ? 1 : 0
   name        = format("%s-efs", module.this.id)
