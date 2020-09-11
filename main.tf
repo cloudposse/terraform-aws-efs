@@ -39,7 +39,7 @@ resource "aws_efs_access_point" "default" {
   }
 
   root_directory {
-    path            = each.key
+    path            = "/${each.key}"
     creation_info {
       owner_gid     = var.access_points[each.key]["creation_info"]["gid"]
       owner_uid     = var.access_points[each.key]["creation_info"]["uid"]
