@@ -10,7 +10,7 @@ variable "allowed_cidr_blocks" {
 }
 
 variable "access_points" {
-  type        = map(map(map(string)))
+  type        = map(map(map(any)))
   default     = {}
   description = "A list of the access points you would like in your EFS volume"
 }
