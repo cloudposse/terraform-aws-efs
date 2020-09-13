@@ -28,26 +28,27 @@ resource "aws_efs_mount_target" "default" {
 }
 
 resource "aws_efs_access_point" "default" {
-  for_each          = var.access_points
+  for_each         = var.access_points
 
-  file_system_id    = join("", aws_efs_file_system.default.*.id)
+  file_system_id   = join("", aws_efs_file_system.default.*.id)
 
   posix_user {
-    gid             = var.access_points[each.key]["posix_user"]["gid"]
-    uid             = var.access_points[each.key]["posix_user"]["uid"]
-    secondary_gids  = lookup(lookup(var.access_points[each.key], "posix_user", {}), "secondary_gids", null) == null ? null : null
+    gid            = var.access_points[each.key]["posix_user"]["gid"]
+    uid            = var.access_points[each.key]["posix_user"]["uid"]
+    # Just returning null in the lookup function gives type errors and is not omitting the parameter, this work around ensures null is returned.
+    secondary_gids = lookup(lookup(var.access_points[each.key], "posix_user", {}), "secondary_gids", null) == null ? null : null
   }
 
   root_directory {
-    path            = "/${each.key}"
+    path           = "/${each.key}"
     creation_info {
-      owner_gid     = var.access_points[each.key]["creation_info"]["gid"]
-      owner_uid     = var.access_points[each.key]["creation_info"]["uid"]
-      permissions   = var.access_points[each.key]["creation_info"]["permissions"]
+      owner_gid    = var.access_points[each.key]["creation_info"]["gid"]
+      owner_uid    = var.access_points[each.key]["creation_info"]["uid"]
+      permissions  = var.access_points[each.key]["creation_info"]["permissions"]
     }
   }
 
-  tags                = module.this.tags
+  tags             = module.this.tags
 }
 
 resource "aws_security_group" "efs" {
