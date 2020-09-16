@@ -1,3 +1,13 @@
+output "access_point_arn" {
+  value       = join("", aws_efs_access_point.default.*.arn)
+  description = "EFS AP ARNs"
+}
+
+output "access_point_id" {
+  value       = join("", aws_efs_access_point.default.*.id)
+  description = "EFS AP ids"
+}
+
 output "arn" {
   value       = join("", aws_efs_file_system.default.*.arn)
   description = "EFS ARN"
