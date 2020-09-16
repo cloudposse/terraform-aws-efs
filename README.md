@@ -120,6 +120,7 @@ Available targets:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| access\_points | A list of the access points you would like in your EFS volume | `map(map(map(any)))` | `{}` | no |
 | additional\_tag\_map | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
 | allowed\_cidr\_blocks | The CIDR blocks from which to allow `ingress` traffic to the EFS | `list(string)` | `[]` | no |
 | attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
@@ -152,6 +153,8 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
+| access\_point\_arn | EFS AP ARNs |
+| access\_point\_id | EFS AP ids |
 | arn | EFS ARN |
 | dns\_name | EFS DNS name |
 | host | Route53 DNS hostname for the EFS |
