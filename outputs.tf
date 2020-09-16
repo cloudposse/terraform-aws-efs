@@ -1,10 +1,10 @@
 output "access_point_arn" {
-  value       = join("", aws_efs_access_point.default.*.arn)
+  value       = { for arn in sort(keys(var.access_points)) : arn => aws_efs_access_point.default[arn].arn }
   description = "EFS AP ARNs"
 }
 
 output "access_point_id" {
-  value       = join("", aws_efs_access_point.default.*.id)
+  value       = { for id in sort(keys(var.access_points)) : id => aws_efs_access_point.default[id].id }
   description = "EFS AP ids"
 }
 
