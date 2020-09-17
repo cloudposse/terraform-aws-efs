@@ -57,7 +57,6 @@ resource "aws_security_group" "efs" {
   description = "EFS Security Group"
   vpc_id      = var.vpc_id
 
-  // this breaks destroy in v13 (cycle loop), not sure why this is necessary?
   lifecycle {
     create_before_destroy = true
   }
