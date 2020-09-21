@@ -9,6 +9,12 @@ variable "allowed_cidr_blocks" {
   description = "The CIDR blocks from which to allow `ingress` traffic to the EFS"
 }
 
+variable "access_points" {
+  type        = map(map(map(any)))
+  default     = {}
+  description = "A map of the access points you would like in your EFS volume"
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID"
