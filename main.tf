@@ -97,7 +97,8 @@ resource "aws_security_group_rule" "egress" {
 }
 
 module "dns" {
-  source = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.8.0"
+  source  = "cloudposse/route53-cluster-hostname/aws"
+  version = "0.8.0"
 
   enabled  = module.this.enabled && length(var.zone_id) > 0 ? true : false
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
