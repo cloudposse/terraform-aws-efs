@@ -20,7 +20,7 @@
 
 module "this" {
   source  = "cloudposse/label/null"
-  version = "0.22.0"
+  version = "0.22.1"
 
   enabled             = var.enabled
   namespace           = var.namespace
