@@ -79,7 +79,9 @@ Include this repository as a module in your existing terraform code:
 
 ```hcl
 module "efs" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-efs.git?ref=master"
+  source = "cloudposse/efs/aws"
+  # Cloud Posse recommends pinning every module to a specific version
+  # version     = "x.x.x"
 
   namespace          = "eg"
   stage              = "test"
@@ -114,7 +116,7 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.0 |
+| terraform | >= 0.12.26 |
 | aws | >= 2.0 |
 | local | >= 1.2 |
 | null | >= 2.0 |
