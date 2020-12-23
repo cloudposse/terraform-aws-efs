@@ -98,7 +98,8 @@ resource "aws_security_group_rule" "egress" {
 
 module "dns" {
   source  = "cloudposse/route53-cluster-hostname/aws"
-  version = "0.8.0"
+  version = "0.9.0"
+
 
   enabled  = module.this.enabled && length(var.zone_id) > 0 ? true : false
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
