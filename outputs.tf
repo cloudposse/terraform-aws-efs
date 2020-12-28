@@ -29,7 +29,7 @@ output "dns_name" {
 }
 
 output "mount_target_dns_names" {
-  value       = coalescelist(aws_efs_mount_target.default.*.dns_name, [""])
+  value       = coalescelist(aws_efs_mount_target.default.*.mount_target_dns_name, [""])
   description = "List of EFS mount target DNS names"
 }
 
