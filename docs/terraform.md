@@ -5,8 +5,6 @@
 |------|---------|
 | terraform | >= 0.12.26 |
 | aws | >= 2.0 |
-| local | >= 1.2 |
-| null | >= 2.0 |
 
 ## Providers
 
@@ -26,7 +24,7 @@
 | delimiter | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
 | dns\_name | Name of the CNAME record to create | `string` | `""` | no |
 | enabled | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
-| encrypted | If true, the file system will be encrypted | `bool` | `false` | no |
+| encrypted | If true, the file system will be encrypted | `bool` | `true` | no |
 | environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | id\_length\_limit | Limit `id` to this many characters.<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
 | kms\_key\_id | If set, use a specific KMS key | `string` | `null` | no |
