@@ -39,7 +39,7 @@ variable "zone_id" {
 variable "encrypted" {
   type        = bool
   description = "If true, the file system will be encrypted"
-  default     = false
+  default     = true
 }
 
 variable "kms_key_id" {
