@@ -144,6 +144,23 @@ Available targets:
 |------|---------|
 | aws | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| dns | cloudposse/route53-cluster-hostname/aws | 0.12.0 |
+| this | cloudposse/label/null | 0.24.1 |
+
+## Resources
+
+| Name |
+|------|
+| [aws_efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/efs_access_point) |
+| [aws_efs_file_system](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/efs_file_system) |
+| [aws_efs_mount_target](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/efs_mount_target) |
+| [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group) |
+| [aws_security_group_rule](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group_rule) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -196,7 +213,6 @@ Available targets:
 | security\_group\_arn | EFS Security Group ARN |
 | security\_group\_id | EFS Security Group ID |
 | security\_group\_name | EFS Security Group name |
-
 <!-- markdownlint-restore -->
 
 
