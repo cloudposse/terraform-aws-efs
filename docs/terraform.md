@@ -23,11 +23,11 @@
 
 | Name |
 |------|
-| [aws_efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/efs_access_point) |
-| [aws_efs_file_system](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/efs_file_system) |
-| [aws_efs_mount_target](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/efs_mount_target) |
-| [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group) |
-| [aws_security_group_rule](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/security_group_rule) |
+| [aws_efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_access_point) |
+| [aws_efs_file_system](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system) |
+| [aws_efs_mount_target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_mount_target) |
+| [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) |
+| [aws_security_group_rule](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) |
 
 ## Inputs
 
