@@ -88,6 +88,7 @@ resource "aws_security_group_rule" "ingress_cidr_blocks" {
 
 resource "aws_security_group_rule" "egress" {
   count             = module.this.enabled ? 1 : 0
+  description       = "Allow outbound traffic from CIDR blocks"
   type              = "egress"
   from_port         = 0
   to_port           = 0
