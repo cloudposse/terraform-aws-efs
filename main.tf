@@ -27,7 +27,7 @@ resource "aws_efs_mount_target" "default" {
   subnet_id      = var.subnets[count.index]
   security_groups = compact(
     sort(concat(
-      [module.default_sg.id],
+      [module.security_group.id],
       var.security_groups
     ))
   )
@@ -57,7 +57,7 @@ resource "aws_efs_access_point" "default" {
   tags = module.this.tags
 }
 
-module "default_sg" {
+module "security_group" {
   source  = "cloudposse/security-group/aws"
   version = "0.3.1"
 
