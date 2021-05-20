@@ -46,10 +46,10 @@ module "efs" {
       from_port                = 2049
       to_port                  = 2049
       protocol                 = "tcp"
-      cidr_blocks              = null
-      source_security_group_id = [module.vpc.vpc_default_security_group_id]
+      cidr_blocks              = []
+      source_security_group_id = module.vpc.vpc_default_security_group_id
       description              = "Allow ingress traffic to EFS from trusted Security Groups"
-    },
+    }
   ]
 
   context = module.this.context
