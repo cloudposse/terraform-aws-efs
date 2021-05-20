@@ -28,10 +28,29 @@ module "subnets" {
 module "efs" {
   source = "../../"
 
-  region          = var.region
-  vpc_id          = module.vpc.vpc_id
-  subnets         = module.subnets.private_subnet_ids
-  security_groups = [module.vpc.vpc_default_security_group_id]
+  region  = var.region
+  vpc_id  = module.vpc.vpc_id
+  subnets = module.subnets.private_subnet_ids
+  security_group_rules = [
+    {
+      type                     = "egress"
+      from_port                = 0
+      to_port                  = 65535
+      protocol                 = "-1"
+      cidr_blocks              = ["0.0.0.0/0"]
+      source_security_group_id = null
+      description              = "Allow all egress trafic"
+    },
+    {
+      type                     = "ingress"
+      from_port                = 2049
+      to_port                  = 2049
+      protocol                 = "tcp"
+      cidr_blocks              = null
+      source_security_group_id = [module.vpc.vpc_default_security_group_id]
+      description              = "Allow ingress traffic to EFS from trusted Security Groups"
+    },
+  ]
 
   context = module.this.context
 }

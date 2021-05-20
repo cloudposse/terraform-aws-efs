@@ -49,16 +49,16 @@ output "network_interface_ids" {
 }
 
 output "security_group_id" {
-  value       = join("", aws_security_group.efs.*.id)
+  value       = module.default_sg.id
   description = "EFS Security Group ID"
 }
 
 output "security_group_arn" {
-  value       = join("", aws_security_group.efs.*.arn)
+  value       = module.default_sg.arn
   description = "EFS Security Group ARN"
 }
 
 output "security_group_name" {
-  value       = join("", aws_security_group.efs.*.name)
+  value       = module.default_sg.name
   description = "EFS Security Group name"
 }
