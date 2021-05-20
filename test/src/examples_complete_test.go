@@ -66,7 +66,7 @@ func TestExamplesComplete(t *testing.T) {
 
 	// Run `terraform output` to get the value of an output variable
 	securityGroupName := terraform.Output(t, terraformOptions, "security_group_name")
-	expectedSecurityGroupName := "eg-test-eg-test-efs-" + randId
+	expectedSecurityGroupName := "eg-test-efs-test-" + randId
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, expectedSecurityGroupName, securityGroupName)
 
