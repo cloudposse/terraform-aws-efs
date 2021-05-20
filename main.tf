@@ -67,7 +67,6 @@ module "security_group" {
   description     = var.security_group_description
 
   enabled = local.security_group_enabled
-  name    = format("%s-efs", module.this.id)
   context = module.this.context
 }
 
