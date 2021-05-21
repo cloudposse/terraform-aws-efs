@@ -39,7 +39,7 @@ variable "security_group_rules" {
 variable "security_groups" {
   type        = list(string)
   default     = []
-  description = "A list of Security Group IDs to associate with EFS"
+  description = "A list of Security Group IDs to associate with EFS."
 }
 
 variable "access_points" {
