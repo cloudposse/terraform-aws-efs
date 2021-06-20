@@ -16,6 +16,7 @@ resource "aws_efs_file_system" "default" {
     for_each = var.transition_to_ia == "" ? [] : [1]
     content {
       transition_to_ia = var.transition_to_ia
+      prevent_destroy  = var.prevent_destroy
     }
   }
 }
