@@ -17,7 +17,7 @@ resource "aws_efs_file_system" "default" {
     content {
       transition_to_ia = var.transition_to_ia
     }
-    prevent_destroy  = var.prevent_destroy
+    prevent_destroy = var.prevent_destroy
   }
 }
 
