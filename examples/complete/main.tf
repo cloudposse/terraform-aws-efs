@@ -31,7 +31,7 @@ module "efs" {
   region  = var.region
   vpc_id  = module.vpc.vpc_id
   subnets = module.subnets.private_subnet_ids
-  access_points              = {
+  access_points = {
     "data" = {
       posix_user = {
         gid            = "1001"
@@ -46,8 +46,8 @@ module "efs" {
     }
     "data2" = {
       posix_user = {
-        gid            = "2001"
-        uid            = "6000"
+        gid = "2001"
+        uid = "6000"
       }
       creation_info = {
         gid         = "123"
