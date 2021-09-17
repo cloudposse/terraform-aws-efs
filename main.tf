@@ -39,7 +39,7 @@ resource "aws_efs_access_point" "default" {
   file_system_id = join("", aws_efs_file_system.default.*.id)
 
   dynamic "posix_user" {
-    for_each = try(lookup(var.access_points[each.key]["posix_user"]["gid"],""),"") != "" ? ["true"] : []
+    for_each = try(lookup(var.access_points[each.key]["posix_user"]["gid"], ""), "") != "" ? ["true"] : []
 
     content {
       gid = var.access_points[each.key]["posix_user"]["gid"]
@@ -53,7 +53,7 @@ resource "aws_efs_access_point" "default" {
     path = "/${each.key}"
 
     dynamic "creation_info" {
-      for_each = try(lookup(var.access_points[each.key]["creation_info"]["gid"],""),"") != "" ? ["true"] : []
+      for_each = try(lookup(var.access_points[each.key]["creation_info"]["gid"], ""), "") != "" ? ["true"] : []
 
       content {
         owner_gid   = var.access_points[each.key]["creation_info"]["gid"]
