@@ -4,6 +4,7 @@ locals {
 }
 
 resource "aws_efs_file_system" "default" {
+  #bridgecrew:skip=BC_AWS_GENERAL_48 - Skipping as backup plan can be added via https://github.com/cloudposse/terraform-aws-backup
   count                           = module.this.enabled ? 1 : 0
   tags                            = module.this.tags
   availability_zone_name          = var.availability_zone_name
