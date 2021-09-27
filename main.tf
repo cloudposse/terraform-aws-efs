@@ -6,6 +6,7 @@ locals {
 resource "aws_efs_file_system" "default" {
   count                           = module.this.enabled ? 1 : 0
   tags                            = module.this.tags
+  availability_zone_name          = var.availability_zone_name
   encrypted                       = var.encrypted
   kms_key_id                      = var.kms_key_id
   performance_mode                = var.performance_mode
