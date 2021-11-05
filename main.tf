@@ -3,8 +3,8 @@ locals {
   security_group_enabled = module.this.enabled && var.security_group_enabled
 
   secondary_gids = {
-    for key in var.access_points :
-    key => lookup(lookup(var.access_points[key], "posix_user", {}), "secondary_gids", null)
+    for k, v in var.access_points :
+    k => lookup(lookup(var.access_points[k], "posix_user", {}), "secondary_gids", null)
   }
 }
 
