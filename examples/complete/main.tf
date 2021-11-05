@@ -4,7 +4,7 @@ provider "aws" {
 
 module "vpc" {
   source  = "cloudposse/vpc/aws"
-  version = "0.18.1"
+  version = "0.28.0"
 
   cidr_block = "172.16.0.0/16"
 
@@ -13,7 +13,7 @@ module "vpc" {
 
 module "subnets" {
   source  = "cloudposse/dynamic-subnets/aws"
-  version = "0.33.0"
+  version = "0.39.7"
 
   availability_zones   = var.availability_zones
   vpc_id               = module.vpc.vpc_id
@@ -28,10 +28,22 @@ module "subnets" {
 module "efs" {
   source = "../../"
 
-  region          = var.region
-  vpc_id          = module.vpc.vpc_id
-  subnets         = module.subnets.private_subnet_ids
-  security_groups = [module.vpc.vpc_default_security_group_id]
+  region  = var.region
+  vpc_id  = module.vpc.vpc_id
+  subnets = module.subnets.private_subnet_ids
+  additional_security_group_rules = [
+    {
+      type                     = "ingress"
+      from_port                = 2049
+      to_port                  = 2049
+      protocol                 = "tcp"
+      cidr_blocks              = []
+      source_security_group_id = module.vpc.vpc_default_security_group_id
+      description              = "Allow ingress traffic to EFS from trusted Security Groups"
+    }
+  ]
+
+  security_group_suffix = var.security_group_suffix
 
   context = module.this.context
 }

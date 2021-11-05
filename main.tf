@@ -1,9 +1,13 @@
 locals {
-  dns_name = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
+  enabled = module.this.enabled
+
+  dns_name               = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
+  security_group_enabled = local.enabled && var.create_security_group
 }
 
 resource "aws_efs_file_system" "default" {
-  count                           = module.this.enabled ? 1 : 0
+  #bridgecrew:skip=BC_AWS_GENERAL_48: BC complains about not having an AWS Backup plan. We ignore this because this can be done outside of this module.
+  count                           = local.enabled ? 1 : 0
   tags                            = module.this.tags
   encrypted                       = var.encrypted
   kms_key_id                      = var.kms_key_id
@@ -20,11 +24,16 @@ resource "aws_efs_file_system" "default" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  count           = module.this.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
-  file_system_id  = join("", aws_efs_file_system.default.*.id)
-  ip_address      = var.mount_target_ip_address
-  subnet_id       = var.subnets[count.index]
-  security_groups = [join("", aws_security_group.efs.*.id)]
+  count          = local.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
+  file_system_id = join("", aws_efs_file_system.default.*.id)
+  ip_address     = var.mount_target_ip_address
+  subnet_id      = var.subnets[count.index]
+  security_groups = compact(
+    sort(concat(
+      [module.security_group.id],
+      var.security_groups
+    ))
+  )
 }
 
 resource "aws_efs_access_point" "default" {
@@ -51,56 +60,55 @@ resource "aws_efs_access_point" "default" {
   tags = module.this.tags
 }
 
-resource "aws_security_group" "efs" {
-  count       = module.this.enabled ? 1 : 0
-  name        = format("%s-efs", module.this.id)
-  description = "EFS Security Group"
-  vpc_id      = var.vpc_id
+module "security_group_label" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  # For backwards compatibility with v0.30.1
+  attributes = concat(module.this.attributes, [var.security_group_suffix])
 
-  tags = module.this.tags
+  context = module.this.context
 }
 
-resource "aws_security_group_rule" "ingress_security_groups" {
-  count                    = module.this.enabled ? length(var.security_groups) : 0
-  description              = "Allow inbound traffic from existing security groups"
-  type                     = "ingress"
-  from_port                = "2049" # NFS
-  to_port                  = "2049"
-  protocol                 = "tcp"
-  source_security_group_id = var.security_groups[count.index]
-  security_group_id        = join("", aws_security_group.efs.*.id)
-}
+module "security_group" {
+  source  = "cloudposse/security-group/aws"
+  version = "0.4.2"
 
-resource "aws_security_group_rule" "ingress_cidr_blocks" {
-  count             = module.this.enabled && length(var.allowed_cidr_blocks) > 0 ? 1 : 0
-  description       = "Allow inbound traffic from CIDR blocks"
-  type              = "ingress"
-  from_port         = "2049" # NFS
-  to_port           = "2049"
-  protocol          = "tcp"
-  cidr_blocks       = var.allowed_cidr_blocks
-  security_group_id = join("", aws_security_group.efs.*.id)
-}
+  enabled                       = local.security_group_enabled
+  security_group_name           = var.security_group_name
+  create_before_destroy         = var.security_group_create_before_destroy
+  security_group_create_timeout = var.security_group_create_timeout
+  security_group_delete_timeout = var.security_group_delete_timeout
 
-resource "aws_security_group_rule" "egress" {
-  count             = module.this.enabled ? 1 : 0
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = join("", aws_security_group.efs.*.id)
+  security_group_description = var.security_group_description
+  allow_all_egress           = true
+  rules                      = var.additional_security_group_rules
+  rule_matrix = [
+    {
+      source_security_group_ids = local.allowed_security_group_ids
+      cidr_blocks               = var.allowed_cidr_blocks
+      rules = [
+        {
+          key         = null
+          type        = "ingress"
+          from_port   = 2049
+          to_port     = 2049
+          protocol    = "tcp"
+          description = "Allow ingress EFS traffic"
+        }
+      ]
+    }
+  ]
+  vpc_id = var.vpc_id
+
+  context = module.security_group_label.context
 }
 
 module "dns" {
   source  = "cloudposse/route53-cluster-hostname/aws"
-  version = "0.12.0"
+  version = "0.12.2"
 
-  enabled  = module.this.enabled && length(var.zone_id) > 0 ? true : false
+  enabled  = local.enabled && length(var.zone_id) > 0 ? true : false
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
   ttl      = 60
   zone_id  = var.zone_id

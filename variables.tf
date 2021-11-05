@@ -1,8 +1,6 @@
-variable "security_groups" {
-  type        = list(string)
-  description = "Security group IDs to allow access to the EFS"
-}
-
+# Intentionally not deprecated via security_group_inputs.tf since it cannot effectively be replaced via var.additional_security_group_rules.
+# This is because the logic to create these rules exists within this module, and should not be passed in by the consumer
+# of this module.
 variable "allowed_cidr_blocks" {
   type        = list(string)
   default     = []
