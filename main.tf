@@ -44,7 +44,7 @@ resource "aws_efs_access_point" "default" {
     gid = var.access_points[each.key]["posix_user"]["gid"]
     uid = var.access_points[each.key]["posix_user"]["uid"]
     # Just returning null in the lookup function gives type errors and is not omitting the parameter, this work around ensures null is returned.
-    secondary_gids = local.secondary_gids != null ? local.secondary_gids : null
+    secondary_gids = local.secondary_gids != null ? split(",", local.secondary_gids) : null
   }
 
   root_directory {
