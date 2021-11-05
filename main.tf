@@ -125,7 +125,7 @@ module "dns" {
   source  = "cloudposse/route53-cluster-hostname/aws"
   version = "0.12.2"
 
-  enabled  = local.enabled && length(var.zone_id) > 0 ? true : false
+  enabled  = local.enabled && length(var.zone_id) > 0
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
   ttl      = 60
   zone_id  = var.zone_id
