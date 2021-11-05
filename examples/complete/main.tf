@@ -45,5 +45,7 @@ module "efs" {
 
   security_group_suffix = var.security_group_suffix
 
+  transition_to_primary_storage_class = "AFTER_1_ACCESS"
+
   context = module.this.context
 }
