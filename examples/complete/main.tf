@@ -31,6 +31,33 @@ module "efs" {
   region  = var.region
   vpc_id  = module.vpc.vpc_id
   subnets = module.subnets.private_subnet_ids
+  access_points = {
+    "data" = {
+      posix_user = {
+        gid            = "1001"
+        uid            = "5000"
+        secondary_gids = "1002,1003"
+      }
+      creation_info = {
+        gid         = "1001"
+        uid         = "5000"
+        permissions = "0755"
+      }
+    }
+    "data2" = {
+      posix_user = {
+        gid            = "2001"
+        uid            = "6000"
+        secondary_gids = null
+      }
+      creation_info = {
+        gid         = "123"
+        uid         = "222"
+        permissions = "0555"
+      }
+    }
+  }
+
   additional_security_group_rules = [
     {
       type                     = "ingress"
