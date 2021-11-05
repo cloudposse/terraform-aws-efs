@@ -52,5 +52,7 @@ module "efs" {
     }
   ]
 
+  transition_to_primary_storage_class = "AFTER_1_ACCESS"
+
   context = module.this.context
 }
