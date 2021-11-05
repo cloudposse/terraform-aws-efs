@@ -46,8 +46,9 @@ module "efs" {
     }
     "data2" = {
       posix_user = {
-        gid = "2001"
-        uid = "6000"
+        gid            = "2001"
+        uid            = "6000"
+        secondary_gids = []
       }
       creation_info = {
         gid         = "123"
