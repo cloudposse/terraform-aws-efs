@@ -86,3 +86,9 @@ variable "efs_backup_policy_enabled" {
   description = "If `true`, it will turn on automatic backups."
   default     = false
 }
+
+variable "availability_zone_name" {
+  type        = string
+  description = "AWS Availability Zone in which to create the file system. Used to create a file system that uses One Zone storage classes. If set, a single subnet in the same availability zone should be provided to `subnets`"
+  default     = null
+}
