@@ -1,6 +1,5 @@
 locals {
-  dns_name               = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
-  security_group_enabled = module.this.enabled && var.security_group_enabled
+  dns_name = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
 }
 
 resource "aws_efs_file_system" "default" {
@@ -21,16 +20,11 @@ resource "aws_efs_file_system" "default" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  count          = module.this.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
-  file_system_id = join("", aws_efs_file_system.default.*.id)
-  ip_address     = var.mount_target_ip_address
-  subnet_id      = var.subnets[count.index]
-  security_groups = compact(
-    sort(concat(
-      [module.security_group.id],
-      var.security_groups
-    ))
-  )
+  count           = module.this.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
+  file_system_id  = join("", aws_efs_file_system.default.*.id)
+  ip_address      = var.mount_target_ip_address
+  subnet_id       = var.subnets[count.index]
+  security_groups = [join("", aws_security_group.efs.*.id)]
 }
 
 resource "aws_efs_access_point" "default" {
@@ -57,17 +51,49 @@ resource "aws_efs_access_point" "default" {
   tags = module.this.tags
 }
 
-module "security_group" {
-  source  = "cloudposse/security-group/aws"
-  version = "0.3.1"
+resource "aws_security_group" "efs" {
+  count       = module.this.enabled ? 1 : 0
+  name        = format("%s-efs", module.this.id)
+  description = "EFS Security Group"
+  vpc_id      = var.vpc_id
 
-  use_name_prefix = var.security_group_use_name_prefix
-  rules           = var.security_group_rules
-  vpc_id          = var.vpc_id
-  description     = var.security_group_description
+  lifecycle {
+    create_before_destroy = true
+  }
 
-  enabled = local.security_group_enabled
-  context = module.this.context
+  tags = module.this.tags
+}
+
+resource "aws_security_group_rule" "ingress_security_groups" {
+  count                    = module.this.enabled ? length(var.security_groups) : 0
+  description              = "Allow inbound traffic from existing security groups"
+  type                     = "ingress"
+  from_port                = "2049" # NFS
+  to_port                  = "2049"
+  protocol                 = "tcp"
+  source_security_group_id = var.security_groups[count.index]
+  security_group_id        = join("", aws_security_group.efs.*.id)
+}
+
+resource "aws_security_group_rule" "ingress_cidr_blocks" {
+  count             = module.this.enabled && length(var.allowed_cidr_blocks) > 0 ? 1 : 0
+  description       = "Allow inbound traffic from CIDR blocks"
+  type              = "ingress"
+  from_port         = "2049" # NFS
+  to_port           = "2049"
+  protocol          = "tcp"
+  cidr_blocks       = var.allowed_cidr_blocks
+  security_group_id = join("", aws_security_group.efs.*.id)
+}
+
+resource "aws_security_group_rule" "egress" {
+  count             = module.this.enabled ? 1 : 0
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = join("", aws_security_group.efs.*.id)
 }
 
 module "dns" {
