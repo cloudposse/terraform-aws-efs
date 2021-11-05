@@ -13,9 +13,10 @@ resource "aws_efs_file_system" "default" {
   throughput_mode                 = var.throughput_mode
 
   dynamic "lifecycle_policy" {
-    for_each = var.transition_to_ia == "" ? [] : [1]
+    for_each = var.transition_to_ia != null || var.transition_to_primary_storage_class != null ? [1] : [0]
     content {
-      transition_to_ia = var.transition_to_ia
+      transition_to_ia                    = var.transition_to_ia
+      transition_to_primary_storage_class = var.transition_to_primary_storage_class
     }
   }
 }
