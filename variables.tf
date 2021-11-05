@@ -78,13 +78,13 @@ variable "dns_name" {
 variable "transition_to_ia" {
   type        = string
   description = "Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS"
-  default     = null
+  default     = ""
 }
 
 variable "transition_to_primary_storage_class" {
   type        = string
   description = "Describes the policy used to transition a file from infequent access storage to primary storage. Valid values: AFTER_1_ACCESS."
-  default     = null
+  default     = ""
 }
 
 variable "efs_backup_policy_enabled" {
