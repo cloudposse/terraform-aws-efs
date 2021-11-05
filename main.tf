@@ -54,8 +54,8 @@ resource "aws_efs_access_point" "default" {
     for_each = local.secondary_gids[each.key] != null ? ["true"] : []
 
     content {
-      gid = var.access_points[each.key]["posix_user"]["gid"]
-      uid = var.access_points[each.key]["posix_user"]["uid"]
+      gid            = var.access_points[each.key]["posix_user"]["gid"]
+      uid            = var.access_points[each.key]["posix_user"]["uid"]
       secondary_gids = local.secondary_gids[each.key] != null ? split(",", local.secondary_gids[each.key]) : null
     }
   }
