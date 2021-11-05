@@ -1,6 +1,8 @@
 locals {
   dns_name               = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
   security_group_enabled = module.this.enabled && var.security_group_enabled
+
+  secondary_gids = lookup(lookup(var.access_points[each.key], "posix_user", {}), "secondary_gids", null)
 }
 
 resource "aws_efs_file_system" "default" {
@@ -42,7 +44,7 @@ resource "aws_efs_access_point" "default" {
     gid = var.access_points[each.key]["posix_user"]["gid"]
     uid = var.access_points[each.key]["posix_user"]["uid"]
     # Just returning null in the lookup function gives type errors and is not omitting the parameter, this work around ensures null is returned.
-    secondary_gids = lookup(lookup(var.access_points[each.key], "posix_user", {}), "secondary_gids", null) == null ? null : split(",", lookup(lookup(var.access_points[each.key], "posix_user", {}), "secondary_gids", null))
+    secondary_gids = local.secondary_gids != null ? local.secondary_gids : null
   }
 
   root_directory {
