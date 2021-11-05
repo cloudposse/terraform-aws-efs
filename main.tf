@@ -116,3 +116,13 @@ module "dns" {
 
   context = module.this.context
 }
+
+resource "aws_efs_backup_policy" "policy" {
+  count = module.this.enabled ? 1 : 0
+
+  file_system_id = join("", aws_efs_file_system.default.*.id)
+
+  backup_policy {
+    status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"
+  }
+}
