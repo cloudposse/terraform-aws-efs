@@ -61,7 +61,7 @@ usage: |-
     region    = "us-west-1"
     vpc_id    = var.vpc_id
     subnets   = var.private_subnets
-    zone_id   = var.aws_route53_dns_zone_id
+    zone_id   = [var.aws_route53_dns_zone_id]
 
     allowed_security_group_ids = [var.security_group_id]
   }
