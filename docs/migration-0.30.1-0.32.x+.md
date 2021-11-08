@@ -2,7 +2,7 @@
 
 NOTE: This is not a migration guide from the pre-release versions 0.31.0 and 0.31.1
 
-Version `0.32.0` of this module introduces breaking changes that, without taking additional precautions, will cause the underlying resources to be recreated.
+Version `0.32.0` of this module introduces changes that, without taking additional precautions, will cause the security group created by this module to be replaced with a new one. Note that the EFS file system will not be affected, all that will change is that the EFS mount targets will be moved to a new security group and there may be a brief period (likely only a few seconds) during which all connectivity is lost. 
 
 This is because of the newer version's reliance on the [terraform-aws-security-group](https://github.com/cloudposse/terraform-aws-security-group)
 module for managing the module's security group. This changes the Terraform resource address.
