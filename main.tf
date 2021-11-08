@@ -121,7 +121,7 @@ module "dns" {
   enabled  = local.enabled && length(var.zone_id) > 0
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
   ttl      = 60
-  zone_id  = var.zone_id
+  zone_id  = try(var.zone_id[0], null)
   records  = [local.dns_name]
 
   context = module.this.context
