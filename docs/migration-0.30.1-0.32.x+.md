@@ -9,7 +9,8 @@ module for managing the module's security group. This changes the Terraform reso
 
 To circumvent this, after bumping the module version to the newer version,
 
-`transition_to_ia` is now a `list(string)` so pass in the single value as a list.
+* `transition_to_ia` is now a `list(string)` so pass in the single value as a list.
+* `zone_id` is now a `list(string)` so pass in the single value as a list.
 
 Run a `terraform plan` to retrieve the resource addresses of the SG that Terraform would like to destroy, and the resource address of the SG which Terraform would like to create.
 
