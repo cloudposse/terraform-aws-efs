@@ -34,6 +34,7 @@ variable "subnets" {
 
 variable "zone_id" {
   type        = list(string)
+  default     = []
   description = <<-EOT
     Route53 DNS Zone ID as list of string (0 or 1 items). If empty, no custom DNS name will be published.
     If the list contains a single Zone ID, a custom DNS name will be pulished in that zone.
