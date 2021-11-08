@@ -31,6 +31,7 @@ module "efs" {
   region  = var.region
   vpc_id  = module.vpc.vpc_id
   subnets = module.subnets.private_subnet_ids
+
   access_points = {
     "data" = {
       posix_user = {
@@ -70,9 +71,9 @@ module "efs" {
     }
   ]
 
-  security_group_suffix = var.security_group_suffix
+  transition_to_ia = ["AFTER_7_DAYS"]
 
-  transition_to_primary_storage_class = "AFTER_1_ACCESS"
+  transition_to_primary_storage_class = ["AFTER_1_ACCESS"]
 
   context = module.this.context
 }
