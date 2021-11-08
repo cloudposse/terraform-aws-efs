@@ -1,14 +1,17 @@
 locals {
-  enabled = module.this.enabled
-
-  dns_name               = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
+  enabled                = module.this.enabled
   security_group_enabled = local.enabled && var.create_security_group
 
-  # returning null in the lookup function gives type errors and is not omitting the parameter
-  # this work around ensures null is returned.
+  dns_name = format("%s.efs.%s.amazonaws.com", join("", aws_efs_file_system.default.*.id), var.region)
+  # Returning null in the lookup function gives type errors and is not omitting the parameter.
+  # This work around ensures null is returned.
+  posix_users = {
+    for k, v in var.access_points :
+    k => lookup(var.access_points[k], "posix_user", {})
+  }
   secondary_gids = {
     for k, v in var.access_points :
-    k => lookup(lookup(var.access_points[k], "posix_user", {}), "secondary_gids", null)
+    k => lookup(local.posix_users, "secondary_gids", null)
   }
 }
 
@@ -51,11 +54,11 @@ resource "aws_efs_access_point" "default" {
   file_system_id = join("", aws_efs_file_system.default.*.id)
 
   dynamic "posix_user" {
-    for_each = local.secondary_gids[each.key] != null ? ["true"] : []
+    for_each = local.posix_user[each.key] != null ? ["true"] : []
 
     content {
-      gid            = var.access_points[each.key]["posix_user"]["gid"]
-      uid            = var.access_points[each.key]["posix_user"]["uid"]
+      gid            = local.posix_user[each.key]["gid"]
+      uid            = local.posix_user[each.key]["uid"]
       secondary_gids = local.secondary_gids[each.key] != null ? split(",", local.secondary_gids[each.key]) : null
     }
   }
