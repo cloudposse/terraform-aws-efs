@@ -18,10 +18,19 @@ For more information on why we use a `list(string)` instead of `string` for stri
 
 Run a `terraform plan` to retrieve the resource addresses of the SG that Terraform would like to destroy, and the resource address of the SG which Terraform would like to create.
 
-Make sure that the following variable is set since the original SG name had the suffix `-efs`. Setting `security_group_name` to its "legacy" value will keep the Security Group from being replaced, and hence the underlying resource.
+Make sure that the following variables are set since the original SG name had the suffix `-efs`.
+
+* Setting `security_group_create_before_destroy = false` prevents using `name_prefix` on the SG resource
+* Setting `security_group_name` to its "legacy" value will keep the Security Group from being replaced, and hence the underlying resource.
 
 ```hcl
-security_group_name = "<existing-sg-name>"
+security_group_create_before_destroy = false
+
+# if not using context
+security_group_name = ["<existing-sg-name>"]
+
+# if using context
+security_group_name = ["${module.this.context}-efs"]
 ```
 
 Finally, change the resource address of the existing Security Group. The resources' source and destination addresses will vary based on how this module is used.
@@ -29,9 +38,17 @@ Finally, change the resource address of the existing Security Group. The resourc
 If the module's name is `efs`, here is an example set of `terraform state mv` commands to get started.
 
 ```bash
+# required - move the security group resource
 terraform state mv \
   'module.efs.aws_security_group.efs[0]' \
   'module.efs.module.security_group.aws_security_group.default[0]'
+# optional - move the security group rules (may be different depending on usage)
+terraform state mv \
+  'module.efs.aws_security_group_rule.ingress_security_groups[0]' \
+  'module.efs.module.security_group.aws_security_group_rule.keyed["_m[0]#[0]#sg#0"]'
+terraform state mv \
+  'module.efs.aws_security_group_rule.egress[0]' \
+  'module.efs.module.security_group.aws_security_group_rule.keyed["_allow_all_egress_"]'
 ```
 
 This will result in an plan that will only destroy SG Rules, but not the Security Group itself.
