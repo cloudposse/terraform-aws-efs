@@ -7,7 +7,7 @@ Version `0.32.0` of this module introduces breaking changes that, without taking
 This is because of the newer version's reliance on the [terraform-aws-security-group](https://github.com/cloudposse/terraform-aws-security-group)
 module for managing the module's security group. This changes the Terraform resource address.
 
-To circumvent this, after bumping the module version to the newer version,
+To circumvent this, after bumping the module version to the newer version, make note of these changes.
 
 * `transition_to_ia` is now a `list(string)` so pass in the single value as a list.
 * `zone_id` is now a `list(string)` so pass in the single value as a list.
