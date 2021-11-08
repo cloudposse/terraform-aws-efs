@@ -110,7 +110,7 @@ module "efs" {
   region    = "us-west-1"
   vpc_id    = var.vpc_id
   subnets   = var.private_subnets
-  zone_id   = var.aws_route53_dns_zone_id
+  zone_id   = [var.aws_route53_dns_zone_id]
 
   allowed_security_group_ids = [var.security_group_id]
 }
@@ -212,7 +212,7 @@ Available targets:
 | <a name="input_transition_to_ia"></a> [transition\_to\_ia](#input\_transition\_to\_ia) | Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER\_7\_DAYS, AFTER\_14\_DAYS, AFTER\_30\_DAYS, AFTER\_60\_DAYS and AFTER\_90\_DAYS | `list(string)` | `[]` | no |
 | <a name="input_transition_to_primary_storage_class"></a> [transition\_to\_primary\_storage\_class](#input\_transition\_to\_primary\_storage\_class) | Describes the policy used to transition a file from infequent access storage to primary storage. Valid values: AFTER\_1\_ACCESS. | `list(string)` | `[]` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID | `string` | n/a | yes |
-| <a name="input_zone_id"></a> [zone\_id](#input\_zone\_id) | Route53 DNS zone ID | `string` | `""` | no |
+| <a name="input_zone_id"></a> [zone\_id](#input\_zone\_id) | Route53 DNS Zone ID as list of string (0 or 1 items). If empty, no custom DNS name will be published.<br>If the list contains a single Zone ID, a custom DNS name will be pulished in that zone.<br>Can also be a plain string, but that use is DEPRECATED because of Terraform issues. | `list(string)` | n/a | yes |
 
 ## Outputs
 
