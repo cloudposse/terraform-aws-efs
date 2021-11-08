@@ -76,15 +76,27 @@ variable "dns_name" {
 }
 
 variable "transition_to_ia" {
-  type        = string
+  type        = list(string)
   description = "Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS"
-  default     = ""
+  default     = []
+  validation {
+    condition = (
+      length(var.transition_to_primary_storage_class) == 1 ? contains(["AFTER_7_DAYS", "AFTER_14_DAYS", "AFTER_30_DAYS", "AFTER_60_DAYS", "AFTER_90_DAYS"], var.transition_to_primary_storage_class[0]) : length(var.transition_to_primary_storage_class) == 0
+    )
+    error_message = "Var `transition_to_ia` must either be empty list or one of \"AFTER_7_DAYS\", \"AFTER_14_DAYS\", \"AFTER_30_DAYS\", \"AFTER_60_DAYS\", \"AFTER_90_DAYS\"."
+  }
 }
 
 variable "transition_to_primary_storage_class" {
-  type        = string
+  type        = list(string)
   description = "Describes the policy used to transition a file from infequent access storage to primary storage. Valid values: AFTER_1_ACCESS."
-  default     = ""
+  default     = []
+  validation {
+    condition = (
+      length(var.transition_to_primary_storage_class) == 1 ? contains(["AFTER_1_ACCESS"], var.transition_to_primary_storage_class[0]) : length(var.transition_to_primary_storage_class) == 0
+    )
+    error_message = "Var `transition_to_primary_storage_class` must either be empty list or \"AFTER_1_ACCESS\".`"
+  }
 }
 
 variable "efs_backup_policy_enabled" {
