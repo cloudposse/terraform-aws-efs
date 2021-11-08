@@ -54,11 +54,11 @@ resource "aws_efs_access_point" "default" {
   file_system_id = join("", aws_efs_file_system.default.*.id)
 
   dynamic "posix_user" {
-    for_each = local.posix_user[each.key] != null ? ["true"] : []
+    for_each = local.posix_users[each.key] != null ? ["true"] : []
 
     content {
-      gid            = local.posix_user[each.key]["gid"]
-      uid            = local.posix_user[each.key]["uid"]
+      gid            = local.posix_users[each.key]["gid"]
+      uid            = local.posix_users[each.key]["uid"]
       secondary_gids = local.secondary_gids[each.key] != null ? split(",", local.secondary_gids[each.key]) : null
     }
   }
