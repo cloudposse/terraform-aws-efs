@@ -7,18 +7,17 @@ Version `0.32.0` of this module introduces breaking changes that, without taking
 This is because of the newer version's reliance on the [terraform-aws-security-group](https://github.com/cloudposse/terraform-aws-security-group)
 module for managing the module's security group. This changes the Terraform resource address.
 
-To circumvent this, after bumping the module version to the newer version, run a plan to retrieve the resource addresses of
-the SG that Terraform would like to destroy, and the resource address of the SG which Terraform would like to create.
+To circumvent this, after bumping the module version to the newer version,
 
-First, make sure that the following variable is set since the original SG name had the suffix `-efs`.
+`transition_to_ia` is now a `list(string)` so pass in the single value as a list.
+
+Run a `terraform plan` to retrieve the resource addresses of the SG that Terraform would like to destroy, and the resource address of the SG which Terraform would like to create.
+
+Make sure that the following variable is set since the original SG name had the suffix `-efs`. Setting `security_group_name` to its "legacy" value will keep the Security Group from being replaced, and hence the underlying resource.
 
 ```hcl
 security_group_name = "<existing-sg-name>"
 ```
-
-Setting `security_group_name` to its "legacy" value will keep the Security Group from being replaced, and hence the underlying resource.
-
-Run a `terraform plan` to retrieve the new addresses.
 
 Finally, change the resource address of the existing Security Group. The resources' source and destination addresses will vary based on how this module is used.
 
