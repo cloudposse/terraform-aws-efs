@@ -99,7 +99,7 @@ module "security_group" {
       cidr_blocks               = var.allowed_cidr_blocks
       rules = [
         {
-          key         = null
+          key         = "in"
           type        = "ingress"
           from_port   = 2049
           to_port     = 2049
