@@ -39,8 +39,7 @@ variable "security_group_description" {
 }
 
 variable "security_group_create_before_destroy" {
-  type = bool
-
+  type        = bool
   default     = true
   description = <<-EOT
     Set `true` to enable Terraform `create_before_destroy` behavior on the created security group.
