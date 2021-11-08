@@ -50,11 +50,9 @@ variable "security_group_description" {
 variable "security_group_create_before_destroy" {
   type = bool
 
-  default     = false
+  default     = true
   description = <<-EOT
     Set `true` to enable Terraform `create_before_destroy` behavior on the created security group.
-    We recommend setting this `true` on new security groups, but default it to `false` because `true`
-    will cause existing security groups to be replaced, possibly requiring the resource to be deleted and recreated.
     Note that changing this value will always cause the security group to be replaced.
     EOT
 }
