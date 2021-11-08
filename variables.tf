@@ -10,7 +10,11 @@ variable "allowed_cidr_blocks" {
 variable "access_points" {
   type        = map(map(map(any)))
   default     = {}
-  description = "A map of the access points you would like in your EFS volume"
+  description = <<-EOT
+    A map of the access points you would like in your EFS volume
+
+    See [examples/complete] for an example on how to set this up. All keys are strings. The primary keys are the names of access points. The secondary keys are `posix_user` and `creation_info`. The secondary_gids key should be a comma separated value. More information can be found in the terraform resource [efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_access_point).
+    EOT
 }
 
 variable "vpc_id" {
