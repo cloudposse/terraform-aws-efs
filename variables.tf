@@ -88,7 +88,7 @@ variable "transition_to_ia" {
   default     = []
   validation {
     condition = (
-      length(var.transition_to_primary_storage_class) == 1 ? contains(["AFTER_7_DAYS", "AFTER_14_DAYS", "AFTER_30_DAYS", "AFTER_60_DAYS", "AFTER_90_DAYS"], var.transition_to_primary_storage_class[0]) : length(var.transition_to_primary_storage_class) == 0
+      length(var.transition_to_ia) == 1 ? contains(["AFTER_7_DAYS", "AFTER_14_DAYS", "AFTER_30_DAYS", "AFTER_60_DAYS", "AFTER_90_DAYS"], var.transition_to_ia[0]) : length(var.transition_to_ia) == 0
     )
     error_message = "Var `transition_to_ia` must either be empty list or one of \"AFTER_7_DAYS\", \"AFTER_14_DAYS\", \"AFTER_30_DAYS\", \"AFTER_60_DAYS\", \"AFTER_90_DAYS\"."
   }
@@ -102,7 +102,7 @@ variable "transition_to_primary_storage_class" {
     condition = (
       length(var.transition_to_primary_storage_class) == 1 ? contains(["AFTER_1_ACCESS"], var.transition_to_primary_storage_class[0]) : length(var.transition_to_primary_storage_class) == 0
     )
-    error_message = "Var `transition_to_primary_storage_class` must either be empty list or \"AFTER_1_ACCESS\".`"
+    error_message = "Var `transition_to_primary_storage_class` must either be empty list or \"AFTER_1_ACCESS\"."
   }
 }
 
