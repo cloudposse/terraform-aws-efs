@@ -48,9 +48,9 @@ variable "encrypted" {
 }
 
 variable "kms_key_id" {
-  type        = string
+  type        = list(string)
   description = "If set, use a specific KMS key"
-  default     = null
+  default     = []
 }
 
 variable "performance_mode" {

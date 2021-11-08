@@ -11,6 +11,10 @@ To circumvent this, after bumping the module version to the newer version, make 
 
 * `transition_to_ia` is now a `list(string)` so pass in the single value as a list.
 * `zone_id` is now a `list(string)` so pass in the single value as a list.
+* `kms_key_id` is now a `list(string)` so pass in the single value as a list.
+* `security_groups` is deprecated
+
+For more information on why we use a `list(string)` instead of `string` for strings vars, see the SG 4.0 releae notes "Optional Inputs" section linked below.
 
 Run a `terraform plan` to retrieve the resource addresses of the SG that Terraform would like to destroy, and the resource address of the SG which Terraform would like to create.
 
