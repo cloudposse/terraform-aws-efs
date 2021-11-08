@@ -73,7 +73,5 @@ module "efs" {
 
   transition_to_ia = ["AFTER_7_DAYS"]
 
-  transition_to_primary_storage_class = ["AFTER_1_ACCESS"]
-
   context = module.this.context
 }
