@@ -10,26 +10,24 @@ module for managing the module's security group. This changes the Terraform reso
 To circumvent this, after bumping the module version to the newer version, run a plan to retrieve the resource addresses of
 the SG that Terraform would like to destroy, and the resource address of the SG which Terraform would like to create.
 
-First, make sure that the following variable is set:
+First, make sure that the following variable is set since the original SG name had the suffix `-efs`.
 
 ```hcl
-security_group_suffix = "efs"
+security_group_name = "<existing-sg-name>"
 ```
 
-Setting `security_group_suffix` to its "legacy" value will keep the Security Group from being replaced, and hence the underlying resource.
+Setting `security_group_name` to its "legacy" value will keep the Security Group from being replaced, and hence the underlying resource.
 
-Finally, change the resource address of the existing Security Group.
+Run a `terraform plan` to retrieve the new addresses.
+
+Finally, change the resource address of the existing Security Group. The resources' source and destination addresses will vary based on how this module is used.
+
+If the module's name is `efs`, here is an example set of `terraform state mv` commands to get started.
 
 ```bash
 terraform state mv \
   'module.efs.aws_security_group.efs[0]' \
   'module.efs.module.security_group.aws_security_group.default[0]'
-terraform state mv \
-  'module.efs.aws_security_group_rule.egress[0]' \
-  'module.efs.module.security_group.aws_security_group_rule.keyed["_allow_all_egress_"]' \
-terraform state mv \
-  'module.efs.aws_security_group_rule.ingress_security_groups[0]' \
-  'module.efs.module.security_group.aws_security_group_rule.keyed["_m[0]#[0]#sg#0"]'
 ```
 
 This will result in an plan that will only destroy SG Rules, but not the Security Group itself.

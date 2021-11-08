@@ -77,16 +77,6 @@ resource "aws_efs_access_point" "default" {
   tags = module.this.tags
 }
 
-module "security_group_label" {
-  source  = "cloudposse/label/null"
-  version = "0.25.0"
-
-  # For backwards compatibility with v0.30.1
-  attributes = concat(module.this.attributes, [var.security_group_suffix])
-
-  context = module.this.context
-}
-
 module "security_group" {
   source  = "cloudposse/security-group/aws"
   version = "0.4.2"
@@ -118,7 +108,7 @@ module "security_group" {
   ]
   vpc_id = var.vpc_id
 
-  context = module.security_group_label.context
+  context = module.this.context
 }
 
 module "dns" {
