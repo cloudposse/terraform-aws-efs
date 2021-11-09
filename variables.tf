@@ -10,7 +10,11 @@ variable "access_points" {
   description = <<-EOT
     A map of the access points you would like in your EFS volume
 
-    See [examples/complete] for an example on how to set this up. All keys are strings. The primary keys are the names of access points. The secondary keys are `posix_user` and `creation_info`. The secondary_gids key should be a comma separated value. More information can be found in the terraform resource [efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_access_point).
+    See [examples/complete] for an example on how to set this up.
+    All keys are strings. The primary keys are the names of access points.
+    The secondary keys are `posix_user` and `creation_info`.
+    The secondary_gids key should be a comma separated value.
+    More information can be found in the terraform resource [efs_access_point](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_access_point).
     EOT
 }
 
@@ -46,9 +50,9 @@ variable "encrypted" {
 }
 
 variable "kms_key_id" {
-  type        = list(string)
+  type        = string
   description = "If set, use a specific KMS key"
-  default     = []
+  default     = null
 }
 
 variable "performance_mode" {
@@ -83,7 +87,7 @@ variable "dns_name" {
 
 variable "transition_to_ia" {
   type        = list(string)
-  description = "Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS"
+  description = "Indicates how long it takes to transition files to the Infrequent Access (IA) storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS. Default (no value) means \"never\"."
   default     = []
   validation {
     condition = (
@@ -95,7 +99,7 @@ variable "transition_to_ia" {
 
 variable "transition_to_primary_storage_class" {
   type        = list(string)
-  description = "Describes the policy used to transition a file from infequent access storage to primary storage. Valid values: AFTER_1_ACCESS."
+  description = "Describes the policy used to transition a file from Infrequent Access (IA) storage to primary storage. Valid values: AFTER_1_ACCESS."
   default     = []
   validation {
     condition = (
@@ -112,7 +116,7 @@ variable "efs_backup_policy_enabled" {
 }
 
 variable "availability_zone_name" {
-  type        = list(string)
+  type        = string
   description = "AWS Availability Zone in which to create the file system. Used to create a file system that uses One Zone storage classes. If set, a single subnet in the same availability zone should be provided to `subnets`"
-  default     = []
+  default     = null
 }

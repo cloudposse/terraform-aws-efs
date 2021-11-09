@@ -19,9 +19,9 @@ resource "aws_efs_file_system" "default" {
   #bridgecrew:skip=BC_AWS_GENERAL_48: BC complains about not having an AWS Backup plan. We ignore this because this can be done outside of this module.
   count                           = local.enabled ? 1 : 0
   tags                            = module.this.tags
-  availability_zone_name          = try(var.availability_zone_name[0], null)
+  availability_zone_name          = var.availability_zone_name
   encrypted                       = var.encrypted
-  kms_key_id                      = try(var.kms_key_id[0], null)
+  kms_key_id                      = var.kms_key_id
   performance_mode                = var.performance_mode
   provisioned_throughput_in_mibps = var.provisioned_throughput_in_mibps
   throughput_mode                 = var.throughput_mode
