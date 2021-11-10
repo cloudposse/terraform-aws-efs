@@ -42,8 +42,7 @@ related:
 description: |-
   Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
 
-  **NOTE**: Release `0.32.0` contains breaking changes that will result in the destruction of your existing MSK cluster.
-  To preserve the original cluster, follow the instructions in the [0.30.1 to 0.32.x+ migration path](./docs/migration-0.30.1-0.32.x+.md).
+  **NOTE**: Release `0.32.0` contains breaking changes. To preserve the SG, follow the instructions in the [0.30.1 to 0.32.x+ migration path](./docs/migration-0.30.1-0.32.x+.md).
 
 # How to use this project
 usage: |-
