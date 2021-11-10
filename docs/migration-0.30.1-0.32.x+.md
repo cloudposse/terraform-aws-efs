@@ -11,7 +11,6 @@ To circumvent this, after bumping the module version to the newer version, make 
 
 * `transition_to_ia` is now a `list(string)` so pass in the single value as a list.
 * `zone_id` is now a `list(string)` so pass in the single value as a list.
-* `kms_key_id` is now a `list(string)` so pass in the single value as a list.
 * `security_groups` is deprecated. Use `allowed_security_group_ids` instead.
 
 For more information on why we use a `list(string)` instead of `string` for strings vars, see the SG 4.0 releae notes "Optional Inputs" section linked below.
