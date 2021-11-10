@@ -1,11 +1,25 @@
 locals {
-  dns_name               = "${join("", aws_efs_file_system.default.*.id)}.efs.${var.region}.amazonaws.com"
-  security_group_enabled = module.this.enabled && var.security_group_enabled
+  enabled                = module.this.enabled
+  security_group_enabled = local.enabled && var.create_security_group
+
+  dns_name = format("%s.efs.%s.amazonaws.com", join("", aws_efs_file_system.default.*.id), var.region)
+  # Returning null in the lookup function gives type errors and is not omitting the parameter.
+  # This work around ensures null is returned.
+  posix_users = {
+    for k, v in var.access_points :
+    k => lookup(var.access_points[k], "posix_user", {})
+  }
+  secondary_gids = {
+    for k, v in var.access_points :
+    k => lookup(local.posix_users, "secondary_gids", null)
+  }
 }
 
 resource "aws_efs_file_system" "default" {
-  count                           = module.this.enabled ? 1 : 0
+  #bridgecrew:skip=BC_AWS_GENERAL_48: BC complains about not having an AWS Backup plan. We ignore this because this can be done outside of this module.
+  count                           = local.enabled ? 1 : 0
   tags                            = module.this.tags
+  availability_zone_name          = var.availability_zone_name
   encrypted                       = var.encrypted
   kms_key_id                      = var.kms_key_id
   performance_mode                = var.performance_mode
@@ -13,22 +27,23 @@ resource "aws_efs_file_system" "default" {
   throughput_mode                 = var.throughput_mode
 
   dynamic "lifecycle_policy" {
-    for_each = var.transition_to_ia == "" ? [] : [1]
+    for_each = length(var.transition_to_ia) > 0 || length(var.transition_to_primary_storage_class) > 0 ? [1] : [0]
     content {
-      transition_to_ia = var.transition_to_ia
+      transition_to_ia                    = try(var.transition_to_ia[0], null)
+      transition_to_primary_storage_class = try(var.transition_to_primary_storage_class[0], null)
     }
   }
 }
 
 resource "aws_efs_mount_target" "default" {
-  count          = module.this.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
+  count          = local.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
   file_system_id = join("", aws_efs_file_system.default.*.id)
   ip_address     = var.mount_target_ip_address
   subnet_id      = var.subnets[count.index]
   security_groups = compact(
     sort(concat(
       [module.security_group.id],
-      var.security_groups
+      var.associated_security_group_ids
     ))
   )
 }
@@ -38,19 +53,27 @@ resource "aws_efs_access_point" "default" {
 
   file_system_id = join("", aws_efs_file_system.default.*.id)
 
-  posix_user {
-    gid = var.access_points[each.key]["posix_user"]["gid"]
-    uid = var.access_points[each.key]["posix_user"]["uid"]
-    # Just returning null in the lookup function gives type errors and is not omitting the parameter, this work around ensures null is returned.
-    secondary_gids = lookup(lookup(var.access_points[each.key], "posix_user", {}), "secondary_gids", null) == null ? null : null
+  dynamic "posix_user" {
+    for_each = local.posix_users[each.key] != null ? ["true"] : []
+
+    content {
+      gid            = local.posix_users[each.key]["gid"]
+      uid            = local.posix_users[each.key]["uid"]
+      secondary_gids = local.secondary_gids[each.key] != null ? split(",", local.secondary_gids[each.key]) : null
+    }
   }
 
   root_directory {
     path = "/${each.key}"
-    creation_info {
-      owner_gid   = var.access_points[each.key]["creation_info"]["gid"]
-      owner_uid   = var.access_points[each.key]["creation_info"]["uid"]
-      permissions = var.access_points[each.key]["creation_info"]["permissions"]
+
+    dynamic "creation_info" {
+      for_each = try(lookup(var.access_points[each.key]["creation_info"]["gid"], ""), "") != "" ? ["true"] : []
+
+      content {
+        owner_gid   = var.access_points[each.key]["creation_info"]["gid"]
+        owner_uid   = var.access_points[each.key]["creation_info"]["uid"]
+        permissions = var.access_points[each.key]["creation_info"]["permissions"]
+      }
     }
   }
 
@@ -59,26 +82,57 @@ resource "aws_efs_access_point" "default" {
 
 module "security_group" {
   source  = "cloudposse/security-group/aws"
-  version = "0.3.1"
+  version = "0.4.2"
 
-  use_name_prefix = var.security_group_use_name_prefix
-  rules           = var.security_group_rules
-  vpc_id          = var.vpc_id
-  description     = var.security_group_description
+  enabled                       = local.security_group_enabled
+  security_group_name           = var.security_group_name
+  create_before_destroy         = var.security_group_create_before_destroy
+  security_group_create_timeout = var.security_group_create_timeout
+  security_group_delete_timeout = var.security_group_delete_timeout
 
-  enabled = local.security_group_enabled
+  security_group_description = var.security_group_description
+  allow_all_egress           = true
+  rules                      = var.additional_security_group_rules
+  rule_matrix = [
+    {
+      source_security_group_ids = local.allowed_security_group_ids
+      cidr_blocks               = var.allowed_cidr_blocks
+      rules = [
+        {
+          key         = "in"
+          type        = "ingress"
+          from_port   = 2049
+          to_port     = 2049
+          protocol    = "tcp"
+          description = "Allow ingress EFS traffic"
+        }
+      ]
+    }
+  ]
+  vpc_id = var.vpc_id
+
   context = module.this.context
 }
 
 module "dns" {
   source  = "cloudposse/route53-cluster-hostname/aws"
-  version = "0.12.0"
+  version = "0.12.2"
 
-  enabled  = module.this.enabled && length(var.zone_id) > 0 ? true : false
+  enabled  = local.enabled && length(var.zone_id) > 0
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
   ttl      = 60
-  zone_id  = var.zone_id
+  zone_id  = try(var.zone_id[0], null)
   records  = [local.dns_name]
 
   context = module.this.context
+}
+
+resource "aws_efs_backup_policy" "policy" {
+  count = module.this.enabled ? 1 : 0
+
+  file_system_id = join("", aws_efs_file_system.default.*.id)
+
+  backup_policy {
+    status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"
+  }
 }

@@ -41,6 +41,9 @@ related:
 # Short description of this project
 description: |-
   Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
+
+  **NOTE**: Release `0.32.0` contains breaking changes. To preserve the SG, follow the instructions in the [0.30.1 to 0.32.x+ migration path](./docs/migration-0.30.1-0.32.x+.md).
+
 # How to use this project
 usage: |-
   Include this repository as a module in your existing terraform code:
@@ -51,14 +54,15 @@ usage: |-
     # Cloud Posse recommends pinning every module to a specific version
     # version     = "x.x.x"
 
-    namespace       = "eg"
-    stage           = "test"
-    name            = "app"
-    region          = "us-west-1"
-    vpc_id          = var.vpc_id
-    subnets         = var.private_subnets
-    security_groups = [var.security_group_id]
-    zone_id         = var.aws_route53_dns_zone_id
+    namespace = "eg"
+    stage     = "test"
+    name      = "app"
+    region    = "us-west-1"
+    vpc_id    = var.vpc_id
+    subnets   = var.private_subnets
+    zone_id   = [var.aws_route53_dns_zone_id]
+
+    allowed_security_group_ids = [var.security_group_id]
   }
   ```
 
@@ -82,3 +86,5 @@ contributors:
     github: "joshmyers"
   - name: "Vladimir Syromyatnikov"
     github: "SweetOps"
+  - name: "RB"
+    github: "nitrocode"

@@ -24,7 +24,7 @@ output "host" {
 }
 
 output "dns_name" {
-  value       = local.dns_name
+  value       = local.enabled ? local.dns_name : null
   description = "EFS DNS name"
 }
 
