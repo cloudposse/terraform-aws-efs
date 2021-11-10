@@ -43,7 +43,7 @@ resource "aws_efs_mount_target" "default" {
   security_groups = compact(
     sort(concat(
       [module.security_group.id],
-      var.security_groups
+      var.associated_security_group_ids
     ))
   )
 }
