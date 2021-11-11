@@ -1,4 +1,4 @@
-locals { 
+locals {
   enabled                = module.this.enabled
   security_group_enabled = local.enabled && var.create_security_group
 
