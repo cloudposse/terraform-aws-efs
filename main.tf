@@ -27,7 +27,7 @@ resource "aws_efs_file_system" "default" {
   throughput_mode                 = var.throughput_mode
 
   dynamic "lifecycle_policy" {
-    for_each = length(var.transition_to_ia) > 0 || length(var.transition_to_primary_storage_class) > 0 ? [1] : [0]
+    for_each = length(var.transition_to_ia) > 0 || length(var.transition_to_primary_storage_class) > 0 ? [1] : []
     content {
       transition_to_ia                    = try(var.transition_to_ia[0], null)
       transition_to_primary_storage_class = try(var.transition_to_primary_storage_class[0], null)
