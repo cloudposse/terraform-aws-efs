@@ -71,8 +71,6 @@ module "efs" {
     }
   ]
 
-  transition_to_ia = ["AFTER_7_DAYS"]
-
   security_group_create_before_destroy = false
 
   context = module.this.context
