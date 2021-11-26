@@ -18,16 +18,6 @@ output "id" {
   description = "EFS ID"
 }
 
-output "host" {
-  value       = module.dns.hostname
-  description = "Route53 DNS hostname for the EFS"
-}
-
-output "dns_name" {
-  value       = local.enabled ? local.dns_name : null
-  description = "EFS DNS name"
-}
-
 output "mount_target_dns_names" {
   value       = coalescelist(aws_efs_mount_target.default.*.mount_target_dns_name, [""])
   description = "List of EFS mount target DNS names"
@@ -46,19 +36,4 @@ output "mount_target_ips" {
 output "network_interface_ids" {
   value       = coalescelist(aws_efs_mount_target.default.*.network_interface_id, [""])
   description = "List of mount target network interface IDs"
-}
-
-output "security_group_id" {
-  value       = module.security_group.id
-  description = "EFS Security Group ID"
-}
-
-output "security_group_arn" {
-  value       = module.security_group.arn
-  description = "EFS Security Group ARN"
-}
-
-output "security_group_name" {
-  value       = module.security_group.name
-  description = "EFS Security Group name"
 }

@@ -1,7 +1,5 @@
 locals {
   enabled                = module.this.enabled
-  security_group_enabled = local.enabled && var.create_security_group
-
   dns_name = format("%s.efs.%s.amazonaws.com", join("", aws_efs_file_system.default.*.id), var.region)
   # Returning null in the lookup function gives type errors and is not omitting the parameter.
   # This work around ensures null is returned.
@@ -40,12 +38,7 @@ resource "aws_efs_mount_target" "default" {
   file_system_id = join("", aws_efs_file_system.default.*.id)
   ip_address     = var.mount_target_ip_address
   subnet_id      = var.subnets[count.index]
-  security_groups = compact(
-    sort(concat(
-      [module.security_group.id],
-      var.associated_security_group_ids
-    ))
-  )
+  security_groups = var.security_group_ids
 }
 
 resource "aws_efs_access_point" "default" {
@@ -78,61 +71,4 @@ resource "aws_efs_access_point" "default" {
   }
 
   tags = module.this.tags
-}
-
-module "security_group" {
-  source  = "cloudposse/security-group/aws"
-  version = "0.4.2"
-
-  enabled                       = local.security_group_enabled
-  security_group_name           = var.security_group_name
-  create_before_destroy         = var.security_group_create_before_destroy
-  security_group_create_timeout = var.security_group_create_timeout
-  security_group_delete_timeout = var.security_group_delete_timeout
-
-  security_group_description = var.security_group_description
-  allow_all_egress           = true
-  rules                      = var.additional_security_group_rules
-  rule_matrix = [
-    {
-      source_security_group_ids = local.allowed_security_group_ids
-      cidr_blocks               = var.allowed_cidr_blocks
-      rules = [
-        {
-          key         = "in"
-          type        = "ingress"
-          from_port   = 2049
-          to_port     = 2049
-          protocol    = "tcp"
-          description = "Allow ingress EFS traffic"
-        }
-      ]
-    }
-  ]
-  vpc_id = var.vpc_id
-
-  context = module.this.context
-}
-
-module "dns" {
-  source  = "cloudposse/route53-cluster-hostname/aws"
-  version = "0.12.2"
-
-  enabled  = local.enabled && length(var.zone_id) > 0
-  dns_name = var.dns_name == "" ? module.this.id : var.dns_name
-  ttl      = 60
-  zone_id  = try(var.zone_id[0], null)
-  records  = [local.dns_name]
-
-  context = module.this.context
-}
-
-resource "aws_efs_backup_policy" "policy" {
-  count = module.this.enabled ? 1 : 0
-
-  file_system_id = join("", aws_efs_file_system.default.*.id)
-
-  backup_policy {
-    status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"
-  }
 }

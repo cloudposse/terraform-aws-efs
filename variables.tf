@@ -1,9 +1,3 @@
-variable "allowed_cidr_blocks" {
-  type        = list(string)
-  default     = []
-  description = "The CIDR blocks from which to allow `ingress` traffic to the EFS"
-}
-
 variable "access_points" {
   type        = map(map(map(any)))
   default     = {}
@@ -31,16 +25,6 @@ variable "region" {
 variable "subnets" {
   type        = list(string)
   description = "Subnet IDs"
-}
-
-variable "zone_id" {
-  type        = list(string)
-  default     = []
-  description = <<-EOT
-    Route53 DNS Zone ID as list of string (0 or 1 items). If empty, no custom DNS name will be published.
-    If the list contains a single Zone ID, a custom DNS name will be pulished in that zone.
-    Can also be a plain string, but that use is DEPRECATED because of Terraform issues.
-    EOT
 }
 
 variable "encrypted" {
@@ -79,12 +63,6 @@ variable "mount_target_ip_address" {
   default     = null
 }
 
-variable "dns_name" {
-  type        = string
-  description = "Name of the CNAME record to create"
-  default     = ""
-}
-
 variable "transition_to_ia" {
   type        = list(string)
   description = "Indicates how long it takes to transition files to the Infrequent Access (IA) storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS. Default (no value) means \"never\"."
@@ -119,4 +97,13 @@ variable "availability_zone_name" {
   type        = string
   description = "AWS Availability Zone in which to create the file system. Used to create a file system that uses One Zone storage classes. If set, a single subnet in the same availability zone should be provided to `subnets`"
   default     = null
+}
+
+variable "security_group_ids" {
+  type        = list(string)
+  default     = []
+  description = <<-EOT
+  DEPRECATED: Use `allowed_security_group_ids` instead.
+  A list of Security Group IDs to associate with EFS.
+  EOT
 }
