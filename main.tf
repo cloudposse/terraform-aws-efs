@@ -67,7 +67,7 @@ resource "aws_efs_access_point" "default" {
     path = "/${each.key}"
 
     dynamic "creation_info" {
-      for_each = try(lookup(var.access_points[each.key]["creation_info"]["gid"], ""), "") != "" ? ["true"] : []
+      for_each = try(var.access_points[each.key]["creation_info"]["gid"], "") != "" ? ["true"] : []
 
       content {
         owner_gid   = var.access_points[each.key]["creation_info"]["gid"]
