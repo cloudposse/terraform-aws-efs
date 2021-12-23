@@ -41,7 +41,7 @@ resource "aws_efs_mount_target" "default" {
   ip_address     = var.mount_target_ip_address
   subnet_id      = var.subnets[count.index]
   security_groups = compact(
-    sort(concat(
+    (concat(
       [module.security_group.id],
       var.associated_security_group_ids
     ))
