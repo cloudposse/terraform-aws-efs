@@ -11,7 +11,7 @@ locals {
   }
   secondary_gids = {
     for k, v in var.access_points :
-    k => lookup(local.posix_users, "secondary_gids", null)
+    k => lookup(local.posix_users[k], "secondary_gids", null)
   }
 }
 
@@ -27,9 +27,15 @@ resource "aws_efs_file_system" "default" {
   throughput_mode                 = var.throughput_mode
 
   dynamic "lifecycle_policy" {
-    for_each = length(var.transition_to_ia) > 0 || length(var.transition_to_primary_storage_class) > 0 ? [1] : []
+    for_each = length(var.transition_to_ia) > 0 ? [1] : []
     content {
-      transition_to_ia                    = try(var.transition_to_ia[0], null)
+      transition_to_ia = try(var.transition_to_ia[0], null)
+    }
+  }
+
+  dynamic "lifecycle_policy" {
+    for_each = length(var.transition_to_primary_storage_class) > 0 ? [1] : []
+    content {
       transition_to_primary_storage_class = try(var.transition_to_primary_storage_class[0], null)
     }
   }
@@ -49,7 +55,7 @@ resource "aws_efs_mount_target" "default" {
 }
 
 resource "aws_efs_access_point" "default" {
-  for_each = var.access_points
+  for_each = local.enabled ? var.access_points : {}
 
   file_system_id = join("", aws_efs_file_system.default.*.id)
 
