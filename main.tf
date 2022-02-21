@@ -11,7 +11,7 @@ locals {
   }
   secondary_gids = {
     for k, v in var.access_points :
-    k => lookup(local.posix_users, "secondary_gids", null)
+    k => lookup(local.posix_users[k], "secondary_gids", null)
   }
 }
 
