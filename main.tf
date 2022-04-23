@@ -50,7 +50,7 @@ resource "aws_efs_mount_target" "default" {
     compact(concat(
       var.create_security_group ? [module.security_group.id] : [],
       var.associated_security_group_ids
-    )
+    ))
   )
 }
 
