@@ -88,7 +88,7 @@ resource "aws_efs_access_point" "default" {
 
 module "security_group" {
   source  = "cloudposse/security-group/aws"
-  version = "1.0.1"
+  version = "2.0.0"
 
   enabled                       = local.security_group_enabled
   security_group_name           = var.security_group_name
@@ -122,7 +122,7 @@ module "security_group" {
 
 module "dns" {
   source  = "cloudposse/route53-cluster-hostname/aws"
-  version = "0.12.2"
+  version = "0.12.3"
 
   enabled  = local.enabled && length(var.zone_id) > 0
   dns_name = var.dns_name == "" ? module.this.id : var.dns_name
