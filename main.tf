@@ -2,7 +2,7 @@ locals {
   enabled                = module.this.enabled
   security_group_enabled = local.enabled && var.create_security_group
 
-  dns_name = format("%s.efs.%s.amazonaws.com", join("", aws_efs_file_system.default.*.id), var.region)
+  dns_name = format("%s.efs.%s.amazonaws.com", join("", aws_efs_file_system.default[*].id), var.region)
   # Returning null in the lookup function gives type errors and is not omitting the parameter.
   # This work around ensures null is returned.
   posix_users = {
@@ -43,7 +43,7 @@ resource "aws_efs_file_system" "default" {
 
 resource "aws_efs_mount_target" "default" {
   count          = local.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
-  file_system_id = join("", aws_efs_file_system.default.*.id)
+  file_system_id = join("", aws_efs_file_system.default[*].id)
   ip_address     = var.mount_target_ip_address
   subnet_id      = var.subnets[count.index]
   security_groups = compact(
@@ -57,7 +57,7 @@ resource "aws_efs_mount_target" "default" {
 resource "aws_efs_access_point" "default" {
   for_each = local.enabled ? var.access_points : {}
 
-  file_system_id = join("", aws_efs_file_system.default.*.id)
+  file_system_id = join("", aws_efs_file_system.default[*].id)
 
   dynamic "posix_user" {
     for_each = local.posix_users[each.key] != null ? ["true"] : []
@@ -136,7 +136,7 @@ module "dns" {
 resource "aws_efs_backup_policy" "policy" {
   count = module.this.enabled ? 1 : 0
 
-  file_system_id = join("", aws_efs_file_system.default.*.id)
+  file_system_id = join("", aws_efs_file_system.default[*].id)
 
   backup_policy {
     status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"

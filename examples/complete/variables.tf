@@ -11,12 +11,3 @@ variable "availability_zones" {
     error_message = "Availability zones must be greater than zero."
   }
 }
-
-variable "security_group_suffix" {
-  type        = string
-  default     = ""
-  description = <<-EOT
-  DEPRECATED: Use the module's attributes instead.
-  A suffix of `efs` was used in versions 0.30.1 and earlier.
-  EOT
-}
