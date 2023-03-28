@@ -9,12 +9,12 @@ output "access_point_ids" {
 }
 
 output "arn" {
-  value       = local.enabled ? join("", aws_efs_file_system.default.*.arn) : null
+  value       = local.enabled ? join("", aws_efs_file_system.default[*].arn) : null
   description = "EFS ARN"
 }
 
 output "id" {
-  value       = local.enabled ? join("", aws_efs_file_system.default.*.id) : null
+  value       = local.enabled ? join("", aws_efs_file_system.default[*].id) : null
   description = "EFS ID"
 }
 
@@ -29,22 +29,22 @@ output "dns_name" {
 }
 
 output "mount_target_dns_names" {
-  value       = local.enabled ? coalescelist(aws_efs_mount_target.default.*.mount_target_dns_name, [""]) : null
+  value       = local.enabled ? coalescelist(aws_efs_mount_target.default[*].mount_target_dns_name, [""]) : null
   description = "List of EFS mount target DNS names"
 }
 
 output "mount_target_ids" {
-  value       = local.enabled ? coalescelist(aws_efs_mount_target.default.*.id, [""]) : null
+  value       = local.enabled ? coalescelist(aws_efs_mount_target.default[*].id, [""]) : null
   description = "List of EFS mount target IDs (one per Availability Zone)"
 }
 
 output "mount_target_ips" {
-  value       = local.enabled ? coalescelist(aws_efs_mount_target.default.*.ip_address, [""]) : null
+  value       = local.enabled ? coalescelist(aws_efs_mount_target.default[*].ip_address, [""]) : null
   description = "List of EFS mount target IPs (one per Availability Zone)"
 }
 
 output "network_interface_ids" {
-  value       = local.enabled ? coalescelist(aws_efs_mount_target.default.*.network_interface_id, [""]) : null
+  value       = local.enabled ? coalescelist(aws_efs_mount_target.default[*].network_interface_id, [""]) : null
   description = "List of mount target network interface IDs"
 }
 
