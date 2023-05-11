@@ -71,6 +71,14 @@ variable "security_group_delete_timeout" {
     EOT
 }
 
+variable "allow_all_egress" {
+  type = bool
+  default = false
+  description = <<-EOT
+    Passed to the security group module (if one is created).
+    EOT
+}
+
 variable "additional_security_group_rules" {
   type        = list(any)
   default     = []
