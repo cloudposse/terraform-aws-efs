@@ -88,7 +88,7 @@ resource "aws_efs_access_point" "default" {
 
 module "security_group" {
   source  = "cloudposse/security-group/aws"
-  version = "1.0.1"
+  version = "2.1.0"
 
   enabled                       = local.security_group_enabled
   security_group_name           = var.security_group_name
