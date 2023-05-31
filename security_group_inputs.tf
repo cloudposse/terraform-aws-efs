@@ -73,7 +73,7 @@ variable "security_group_delete_timeout" {
 
 variable "allow_all_egress" {
   type = bool
-  default = false
+  default = true
   description = <<-EOT
     Passed to the security group module (if one is created).
     EOT
