@@ -115,6 +115,18 @@ variable "efs_backup_policy_enabled" {
   default     = false
 }
 
+variable "efs_file_system_policy" {
+  type        = string
+  description = "EFS policy to attach."
+  default     = ""
+}
+
+variable "bypass_policy_lockout_safety_check" {
+  type        = bool
+  description = "A flag to indicate whether to bypass the `aws_efs_file_system_policy` lockout safety check."
+  default     = false
+}
+
 variable "availability_zone_name" {
   type        = string
   description = "AWS Availability Zone in which to create the file system. Used to create a file system that uses One Zone storage classes. If set, a single subnet in the same availability zone should be provided to `subnets`"
