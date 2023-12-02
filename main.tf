@@ -142,3 +142,11 @@ resource "aws_efs_backup_policy" "policy" {
     status = var.efs_backup_policy_enabled ? "ENABLED" : "DISABLED"
   }
 }
+
+resource "aws_efs_file_system_policy" "policy" {
+  count = local.enabled && length(var.efs_file_system_policy) > 0 ? 1 : 0
+
+  file_system_id                     = aws_efs_file_system.default[0].id
+  bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
+  policy                             = var.efs_file_system_policy
+}
