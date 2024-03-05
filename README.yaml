@@ -37,8 +37,7 @@ badges:
     url: https://slack.cloudposse.com
 related:
   - name: terraform-aws-efs-backup
-    description: Terraform module designed to easily backup EFS filesystems to S3
-      using DataPipeline
+    description: Terraform module designed to easily backup EFS filesystems to S3 using DataPipeline
     url: https://github.com/cloudposse/terraform-aws-efs-backup
   - name: terraform-aws-efs-cloudwatch-sns-alarms
     description: Terraform module that configures CloudWatch SNS alerts for EFS
