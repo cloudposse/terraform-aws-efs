@@ -97,7 +97,7 @@ module "security_group" {
   security_group_delete_timeout = var.security_group_delete_timeout
 
   security_group_description = var.security_group_description
-  allow_all_egress           = true
+  allow_all_egress           = var.allow_all_egress
   rules                      = var.additional_security_group_rules
   rule_matrix = [
     {
