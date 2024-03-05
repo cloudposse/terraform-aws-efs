@@ -1,6 +1,6 @@
 <!-- markdownlint-disable -->
 # terraform-aws-efs <a href="https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-efs&utm_content="><img align="right" src="https://cloudposse.com/logo-300x69.svg" width="150" /></a>
-<a href="https://github.com/cloudposse/terraform-aws-efs/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-efs.svg" alt="Latest Release"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/badge.svg" alt="Slack Community"/></a>
+<a href="https://github.com/cloudposse/terraform-aws-efs/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-efs.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-efs/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-efs.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a>
 <!-- markdownlint-restore -->
 
 <!--
@@ -25,7 +25,6 @@
 -->
 
 Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Network File System.
-
 **NOTE**: Release `0.32.0` contains breaking changes. To preserve the SG, follow the instructions in the [0.30.1 to 0.32.x+ migration path](./docs/migration-0.30.1-0.32.x+.md).
 
 
@@ -65,13 +64,11 @@ Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Networ
 
 
 Include this repository as a module in your existing terraform code:
-
 ```hcl
 module "efs" {
   source = "cloudposse/efs/aws"
   # Cloud Posse recommends pinning every module to a specific version
   # version     = "x.x.x"
-
   namespace = "eg"
   stage     = "test"
   name      = "app"
@@ -79,7 +76,6 @@ module "efs" {
   vpc_id    = var.vpc_id
   subnets   = var.private_subnets
   zone_id   = [var.aws_route53_dns_zone_id]
-
   allowed_security_group_ids = [var.security_group_id]
 }
 ```
