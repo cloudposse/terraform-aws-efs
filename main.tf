@@ -33,7 +33,7 @@ resource "aws_efs_file_system" "default" {
     }
   }
 
-    dynamic "lifecycle_policy" {
+  dynamic "lifecycle_policy" {
     for_each = length(var.transition_to_archive) > 0 ? [1] : []
     content {
       transition_to_archive = try(var.transition_to_archive[0], null)
