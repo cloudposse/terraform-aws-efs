@@ -73,6 +73,7 @@ module "efs" {
   ]
 
   transition_to_ia = ["AFTER_7_DAYS"]
+  transition_to_archive = ["AFTER_60_DAYS"]
 
   security_group_create_before_destroy = false
 
