@@ -72,7 +72,7 @@ module "efs" {
     }
   ]
 
-  transition_to_ia      = ["AFTER_7_DAYS"]
+  transition_to_ia = ["AFTER_7_DAYS"]
   #transition_to_archive = ["AFTER_60_DAYS"] # transition_to_archive is only available for Elastic Throughput and General Purpose performance modes. This complete example defaults to Bursting.
 
   security_group_create_before_destroy = false
