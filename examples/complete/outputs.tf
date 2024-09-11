@@ -1,13 +1,16 @@
 output "public_subnet_cidrs" {
-  value = module.subnets.public_subnet_cidrs
+  value       = module.subnets.public_subnet_cidrs
+  description = "List of public subnet CIDRs"
 }
 
 output "private_subnet_cidrs" {
-  value = module.subnets.private_subnet_cidrs
+  value       = module.subnets.private_subnet_cidrs
+  description = "List of private subnet CIDRs"
 }
 
 output "vpc_cidr" {
-  value = module.vpc.vpc_cidr_block
+  value       = module.vpc.vpc_cidr_block
+  description = "VPC CIDR"
 }
 
 output "efs_arn" {
