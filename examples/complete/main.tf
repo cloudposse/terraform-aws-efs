@@ -1,6 +1,5 @@
 provider "aws" {
-  region      = var.region
-  description = "AWS region"
+  region = var.region
 }
 
 module "vpc" {
