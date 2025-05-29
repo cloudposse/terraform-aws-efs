@@ -25,12 +25,17 @@ license: "APACHE2"
 github_repo: cloudposse/terraform-aws-efs
 # Badges to display
 badges:
-  - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-efs.svg"
-    url: "https://github.com/cloudposse/terraform-aws-efs/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
+  - name: Latest Release
+    image: https://img.shields.io/github/release/cloudposse/terraform-aws-efs.svg?style=for-the-badge
+    url: https://github.com/cloudposse/terraform-aws-efs/releases/latest
+  - name: Last Updated
+    image: https://img.shields.io/github/last-commit/cloudposse/terraform-aws-efs.svg?style=for-the-badge
+    url: https://github.com/cloudposse/terraform-aws-efs/commits
+  - name: Slack Community
+    image: https://slack.cloudposse.com/for-the-badge.svg
+    url: https://cloudposse.com/slack
+
+# List any related terraform modules that this module may be used with or that this module depends on.
 related:
   - name: "terraform-aws-efs-backup"
     description: "Terraform module designed to easily backup EFS filesystems to S3 using DataPipeline"
@@ -66,25 +71,5 @@ usage: |-
   }
   ```
 
-include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-# Contributors to this project
-
-contributors:
-  - name: "Erik Osterman"
-    github: "osterman"
-  - name: "Igor Rodionov"
-    github: "goruha"
-  - name: "Andriy Knysh"
-    github: "aknysh"
-  - name: "Sergey Vasilyev"
-    github: "s2504s"
-  - name: "Mike Eirih"
-    github: "maokomioko"
-  - name: "Josh Myers"
-    github: "joshmyers"
-  - name: "Vladimir Syromyatnikov"
-    github: "SweetOps"
-  - name: "RB"
-    github: "nitrocode"
+include: []
+contributors: []
