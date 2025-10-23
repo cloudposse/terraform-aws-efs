@@ -124,6 +124,8 @@ module "security_group" {
   ]
   vpc_id = var.vpc_id
 
+  preserve_security_group_id = var.preserve_security_group_id
+
   context = module.this.context
 }
 
