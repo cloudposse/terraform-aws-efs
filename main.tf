@@ -102,7 +102,7 @@ module "security_group" {
   create_before_destroy         = var.security_group_create_before_destroy
   security_group_create_timeout = var.security_group_create_timeout
   security_group_delete_timeout = var.security_group_delete_timeout
-  preserve_security_group_id = var.preserve_security_group_id
+  preserve_security_group_id    = var.preserve_security_group_id
 
   security_group_description = var.security_group_description
   allow_all_egress           = var.allow_all_egress
