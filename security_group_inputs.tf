@@ -56,6 +56,16 @@ variable "security_group_create_before_destroy" {
     EOT
 }
 
+variable "preserve_security_group_id" {
+  type        = bool
+  default     = false
+  description = <<-EOT
+    If `true`, instruct the underlying security group module to attempt to preserve
+    the security group ID across rule changes. See the upstream CloudPosse
+    `terraform-aws-security-group` module README for details and caveats.
+    EOT
+}
+
 variable "security_group_create_timeout" {
   type        = string
   default     = "10m"
