@@ -43,6 +43,11 @@ output "mount_target_ips" {
   description = "List of EFS mount target IPs (one per Availability Zone)"
 }
 
+output "mount_target_ipv6_addresses" {
+  value       = local.enabled ? coalescelist(aws_efs_mount_target.default[*].ipv6_address, [""]) : null
+  description = "List of EFS mount target IPv6 addresses (one per Availability Zone)"
+}
+
 output "network_interface_ids" {
   value       = local.enabled ? coalescelist(aws_efs_mount_target.default[*].network_interface_id, [""]) : null
   description = "List of mount target network interface IDs"
