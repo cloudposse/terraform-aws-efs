@@ -113,6 +113,7 @@ module "security_group" {
     {
       source_security_group_ids = local.allowed_security_group_ids
       cidr_blocks               = var.allowed_cidr_blocks
+      ipv6_cidr_blocks          = var.allowed_ipv6_cidr_blocks
       rules = [
         {
           key         = "in"

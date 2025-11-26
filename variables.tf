@@ -4,6 +4,12 @@ variable "allowed_cidr_blocks" {
   description = "The CIDR blocks from which to allow `ingress` traffic to the EFS"
 }
 
+variable "allowed_ipv6_cidr_blocks" {
+  type        = list(string)
+  default     = []
+  description = "List of IPv6 CIDR blocks allowed to access the cluster"
+}
+
 variable "access_points" {
   type        = map(map(map(any)))
   default     = {}
