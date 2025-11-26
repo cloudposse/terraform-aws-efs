@@ -49,10 +49,12 @@ resource "aws_efs_file_system" "default" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  count          = local.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
-  file_system_id = join("", aws_efs_file_system.default[*].id)
-  ip_address     = var.mount_target_ip_address
-  subnet_id      = var.subnets[count.index]
+  count           = local.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
+  file_system_id  = join("", aws_efs_file_system.default[*].id)
+  ip_address      = var.mount_target_ip_address_type == "IPV4_ONLY" || var.mount_target_ip_address_type == "DUAL_STACK" ? var.mount_target_ip_address : null
+  ip_address_type = var.mount_target_ip_address_type
+  ipv6_address    = var.mount_target_ip_address_type == "IPV6_ONLY" || var.mount_target_ip_address_type == "DUAL_STACK" ? var.mount_target_ipv6_address : null
+  subnet_id       = var.subnets[count.index]
   security_groups = compact(
     (concat(
       [module.security_group.id],
@@ -111,6 +113,7 @@ module "security_group" {
     {
       source_security_group_ids = local.allowed_security_group_ids
       cidr_blocks               = var.allowed_cidr_blocks
+      ipv6_cidr_blocks          = var.allowed_ipv6_cidr_blocks
       rules = [
         {
           key         = "in"

@@ -4,6 +4,12 @@ variable "allowed_cidr_blocks" {
   description = "The CIDR blocks from which to allow `ingress` traffic to the EFS"
 }
 
+variable "allowed_ipv6_cidr_blocks" {
+  type        = list(string)
+  default     = []
+  description = "List of IPv6 CIDR blocks allowed to access the cluster"
+}
+
 variable "access_points" {
   type        = map(map(map(any)))
   default     = {}
@@ -76,6 +82,22 @@ variable "throughput_mode" {
 variable "mount_target_ip_address" {
   type        = string
   description = "The address (within the address range of the specified subnet) at which the file system may be mounted via the mount target"
+  default     = null
+}
+
+variable "mount_target_ip_address_type" {
+  type        = string
+  description = "IP address type for the mount target. Valid values are IPV4_ONLY (only IPv4 addresses), IPV6_ONLY (only IPv6 addresses), and DUAL_STACK (dual-stack, both IPv4 and IPv6 addresses). Defaults to IPV4_ONLY."
+  default     = "IPV4_ONLY"
+  validation {
+    condition     = contains(["IPV4_ONLY", "IPV6_ONLY", "DUAL_STACK"], var.mount_target_ip_address_type)
+    error_message = "Valid values for mount_target_ip_address_type are IPV4_ONLY, IPV6_ONLY, and DUAL_STACK."
+  }
+}
+
+variable "mount_target_ipv6_address" {
+  type        = string
+  description = "IPv6 address to use. Valid only when mount_target_ip_address_type is set to IPV6_ONLY or DUAL_STACK."
   default     = null
 }
 
