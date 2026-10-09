@@ -35,6 +35,7 @@ Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Networ
 **NOTE**: Release `0.32.0` contains breaking changes. To preserve the SG, follow the instructions in the [0.30.1 to 0.32.x+ migration path](./docs/migration-0.30.1-0.32.x+.md).
 
 
+
 > [!TIP]
 > #### 👽 Use Atmos with Terraform
 > Cloud Posse uses [`atmos`](https://atmos.tools) to easily orchestrate multiple environments using Terraform. <br/>
@@ -45,6 +46,7 @@ Terraform module to provision an AWS [`EFS`](https://aws.amazon.com/efs/) Networ
 > <img src="https://github.com/cloudposse/atmos/blob/main/docs/demo.gif?raw=true"/><br/>
 > <i>Example of running <a href="https://atmos.tools"><code>atmos</code></a> to manage infrastructure from our <a href="https://atmos.tools/quick-start/">Quick Start</a> tutorial.</i>
 > </detalis>
+
 
 
 
@@ -89,20 +91,20 @@ module "efs" {
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.12.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_dns"></a> [dns](#module\_dns) | cloudposse/route53-cluster-hostname/aws | 0.13.0 |
 | <a name="module_security_group"></a> [security\_group](#module\_security\_group) | cloudposse/security-group/aws | 2.2.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
@@ -110,7 +112,7 @@ module "efs" {
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_efs_access_point.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_access_point) | resource |
 | [aws_efs_backup_policy.policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_backup_policy) | resource |
 | [aws_efs_file_system.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system) | resource |
@@ -120,7 +122,7 @@ module "efs" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_access_points"></a> [access\_points](#input\_access\_points) | A map of the access points you would like in your EFS volume<br/><br/>See [examples/complete] for an example on how to set this up.<br/>All keys are strings. The primary keys are the names of access points.<br/>The secondary keys are `posix_user` and `creation_info`.<br/>The secondary\_gids key should be a comma separated value.<br/>More information can be found in the terraform resource [efs\_access\_point](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_access_point). | `map(map(map(any)))` | `{}` | no |
 | <a name="input_additional_security_group_rules"></a> [additional\_security\_group\_rules](#input\_additional\_security\_group\_rules) | A list of Security Group rule objects to add to the created security group, in addition to the ones<br/>this module normally creates. (To suppress the module's rules, set `create_security_group` to false<br/>and supply your own security group via `associated_security_group_ids`.)<br/>The keys and values of the objects are fully compatible with the `aws_security_group_rule` resource, except<br/>for `security_group_id` which will be ignored, and the optional "key" which, if provided, must be unique and known at "plan" time.<br/>To get more info see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule . | `list(any)` | `[]` | no |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br/>This is for some rare cases where resources want additional configuration of tags<br/>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
@@ -178,7 +180,7 @@ module "efs" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_access_point_arns"></a> [access\_point\_arns](#output\_access\_point\_arns) | EFS AP ARNs |
 | <a name="output_access_point_ids"></a> [access\_point\_ids](#output\_access\_point\_ids) | EFS AP ids |
 | <a name="output_arn"></a> [arn](#output\_arn) | EFS ARN |
